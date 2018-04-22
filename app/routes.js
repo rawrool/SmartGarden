@@ -11,6 +11,20 @@ module.exports = function (app, passport) {
     });
 
     // =====================================
+    // DEVELOPER GUIDE =====================
+    // =====================================
+    app.get('/developer', function(req, res){
+        res.render('developer.ejs');
+    });
+
+    // =====================================
+    // User Manual ++++=====================
+    // =====================================
+    app.get('/userMan', function(req, res){
+        res.render('userMan.ejs');
+    });
+
+    // =====================================
     // LOGIN ===============================
     // =====================================
     // show the login form
