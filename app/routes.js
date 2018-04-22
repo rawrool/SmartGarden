@@ -6,6 +6,8 @@ module.exports = function (app, passport) {
     // =====================================
     // req = request
     // res is the response that we are giving back.
+    // res.render() will look in a views folder for the view.
+    
     app.get('/', function (req, res) {
         res.render('index.ejs'); // load the index.ejs file
     });
