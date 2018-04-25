@@ -7,7 +7,7 @@ module.exports = function (app, passport) {
     // req = request
     // res is the response that we are giving back.
     // res.render() will look in a views folder for the view.
-    
+
     app.get('/', function (req, res) {
         res.render('index.ejs'); // load the index.ejs file
     });
@@ -15,14 +15,14 @@ module.exports = function (app, passport) {
     // =====================================
     // DEVELOPER GUIDE =====================
     // =====================================
-    app.get('/developer', function(req, res){
+    app.get('/developer', function (req, res) {
         res.render('developer.ejs');
     });
 
     // =====================================
     // User Manual ++++=====================
     // =====================================
-    app.get('/userMan', function(req, res){
+    app.get('/userMan', function (req, res) {
         res.render('userMan.ejs');
     });
 
@@ -84,6 +84,22 @@ module.exports = function (app, passport) {
         req.logout();
         res.redirect('/');
     });
+
+    // =====================================
+    // GOOGLE ROUTES =======================
+    // =====================================
+    // send to google to do the authentication
+    // profile gets us their basic information including their name
+    // email gets their emails
+    app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
+
+    // the callback after google has authenticated the user
+    app.get('/auth/google/callback',
+        passport.authenticate('google', {
+            successRedirect: '/profile',
+            failureRedirect: '/'
+        }));
+
 };
 
 // route middleware to make sure a user is logged in
