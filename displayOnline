@@ -9,8 +9,8 @@
 //////////////////////////////
 // WiFi Network Parameters  //
 //////////////////////////////
-const char mySSID[] = "NETGEAR50";  // network's name
-const char myPSK[] = "trafalgar153"; // password for the network
+const char mySSID[] = "";  // network's name
+const char myPSK[] = ""; // password for the network
 
 //////////////////////////////
 // ESP8266Server Definition //
