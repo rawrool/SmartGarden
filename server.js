@@ -7,7 +7,7 @@
 // express is the framework
 var express = require('express');
 var app = express();
-var port = process.env.PORT || 3000;
+var port = 3000;
 
 // mongoose is object modeling for our mongoDB database
 var mongoose = require('mongoose');
