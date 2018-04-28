@@ -3,7 +3,9 @@ var Schema = mongoose.Schema;
 
 // creating the schema
 var plantSchema = new Schema({
+    // gardenName acts as a primary key.
     gardenName: {type: String, required: true, unique: false},
+    username: {type: String, required: true, unique: false}, 
     plantName: {type: String, required: true, unique: true},
     plantSize: String,
     created_at: Date,
