@@ -77,6 +77,30 @@ module.exports = function (app, passport) {
         });
     });
 
+
+    // =====================================
+    // GARDEN SECTION ======================
+    // =====================================
+    app.get('/garden', isLoggedIn, function(req, res){
+        res.render('garden.ejs', {
+            user: req.user // get the user out of session and pass to garden.
+            /*
+                will do the same with gardens once I put it in the database.
+                garden: req.garden, or something of the sort.
+            */
+        });
+    });
+
+    /*
+        creating a garden
+    */
+   app.get('/create/garden', isLoggedIn, function(req, res){
+       res.render('gardenCreate.ejs', {
+          user: req.user // get the user out of the session and pass to create a garden
+                        // under this username 
+       });
+   });
+
     // =====================================
     // LOGOUT ==============================
     // =====================================

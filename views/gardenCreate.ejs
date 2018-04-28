@@ -1,0 +1,31 @@
+<!-- views/profile.ejs -->
+<!doctype html>
+<html>
+
+<head>
+    <% include ./partials/head %>
+</head>
+
+<body>
+    <header>
+        <% include ./partials/header %>
+    </header>
+    <div class="container">
+
+        <div class="row">
+            <div class="col-sm-8">
+                <form action="/create/garden" method="post">
+                    <div class="form-group">
+                        <label>Garden Name</label>
+                        <input type="text" class="form-control" name="gardenName">
+                    </div>
+                    <button type="submit" class="btn btn-warning btn-lg">Create</button>
+                </form>
+            </div>
+
+        </div>
+
+    </div>
+</body>
+
+</html>
