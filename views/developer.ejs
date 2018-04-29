@@ -34,89 +34,94 @@
                         fits for different kinds of plants.
                     </p>
                 </span>
-                <h1 id="project_features">What are the features:</h1>
+                <h1 id="project_features">
+                    What are the features:
+                </h1>
                 <h2>App Features</h2>
-                <ul>
-                    <li>
-                        Check the current garden settings and the current state of the garden.
-                    </li>
-                    <li>
-                        Select logs based on the dates that you are interested in.
-                    </li>
-                    <li>
-                        Share your garden settings for certain vegetables.
-                    </li>
-                    <li>
-                        Set a watering schedule for your garden.
-                    </li>
-                </ul>
+                <p>
+                    The mobile and web app will come with 3 key features: checking garden logs, creating garden watering schedules, 
+                    and sharing garden data with other people. When choosing to look up garden logs you can search by date, then 
+                    select the specific log from the list of logs recorded for that day, and have the log displayed on your screen. 
+                    Creating a garden watering schedule is an ease by simply typing in a name for it and choosing the desired time to 
+                    water, duration time, and the option whether to have the schedule repeated daily. A user can also choose to share 
+                    any of their recorded logs, watering schedules, or their plant's progress. When choosing to share their data 
+                    through the mobile app a user is allowed to share their data through different means of communication like SMS, 
+                    email, or social media.
+                </p>
                 <h2>Arduino Features</h2>
-                <ul>
-                    <li>
-                        Connect to a WiFi connection
-                    </li>
-                    <li>
-                        Connect to an online database and store garden data.
-                    </li>
-                    <li>
-                        Control the amount of watering.
-                    </li>
-                    <li>
-                        Measure temperature and humidity within the soil to automate watering when needed.
-                    </li>
-                    <li>
-                        Allow users to request for live data.
-                    </li>
-                </ul>
+                <p>
+                    The Arduino Uno Rev3 Board was chosen for this project because it is one of the most used and popular boards 
+                    available for projects of various complexities. It also doesn't require much power and can be powered through 
+                    usb, AC-to-DC power adapter, or a battery adapter. Another main features of the board is that it has 14 digital
+                    input/output pins and 6 analog pins meaning that it can be equiped with various other components like a WiFi shield,
+                    different sensors, or even other boards. Some of the features that we use from the Adruino Board for this project 
+                    are the ability to easily stack other boards on top, for example a WiFi Shield for connecting the Arduino to a 
+                    WiFi network. Another feature that we are taking advantage of is the number of input/output pins, which we are using 
+                    to connect multiple sensors at the same time. Lastly, the Arduino Board has the ability to also provide enough power 
+                    to power different components for this project we didn't need any additional power source besides the one that is 
+                    powering the board itself.
+                </p>
                 <h1 id="project_components">
                     What are the components:
                 </h1>
-                <ul>
-                    <li>
-                        Hardware Required:
-                        <ul>
-                            <li>
-                                Arduino Uno Rev3
-                            </li>
-                            <li>
-                                Headers for an Arduino Uno Rev3 Shield
-                            </li>
-                            <li>
-                                A breadboard
-                            </li>
-                            <li>
-                                LCD module
-                            </li>
-                            <li>
-                                WiFi Shield
-                            </li>
-                            <li>
-                                2.4GHz Antenna with U.FL connector
-                            </li>
-                            <li>
-                                Soil moisture sensor
-                            </li>
-                            <li>
-                                Temperature and humidity sensor
-                            </li>
-                            <li>
-                                Water solenoid valve
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        Software Required:
-                        <p>NPM, MongoDB, Arduino IDE</p>
-                    </li>
-                    <li>
-                        Languages Being Used:
-                        <p>C++, Objective-C, NodeJS, HTML, CSS</p>
-                    </li>
-                    <li>
-                        Database:
-                        <p>On our project we are using MongoDB for the database.</p>
-                    </li>
-                </ul>
+                <h2>Hardware Required</h2>
+                <p>
+                    The Arduino Board is one of the primary hardware required for this project because it is what connects the 
+                    various other components together and functions kind of like the human brain. It is capable of communicating
+                    with the components connected and allows the user reprogram the board with ease. There is also other published 
+                    project tutorials that are well documented and can be referenced to replicate the project.
+                </p>
+                <p>
+                    The WiFi Shield is another primary hardware required because it is what actually allows the Arduino Board 
+                    to connect to an online connection through WiFi. The shield also has the capability to be stacked on top 
+                    of the board, so that it is powered directly through the board without any additional cables and still 
+                    provide access to the board's input/output pins. We will be using the shield to publish our data onto an 
+                    online database and allow the user to control the Arduino Board online. We chose the SparkFun WiFi Shield 
+                    because the manufacturer provides great documentation and examples online. However, you will need to solder 
+                    on the stackable headers yourself and a 2.4 GHz Antenna with a U.FL connection.
+                </p>
+                <p>
+                    Other primary hardware required are the soil moisture sensor and the temperature and humidity sensor. 
+                    These sensors provide data feed that will be used to monitor the environmental conditions of the user's 
+                    garden. The sensors are both connected directly to a breadboard and the breadboard connected to the 
+                    Arduino Board through jumper cables.
+                </p>
+                <p>
+                    The last hardware required is the water solenoid valve. The valve will be used to control the flow of
+                    water. The valve also required a power source of 12v, unfortunately the Arduino Board can only provide 
+                    up to 5v. Therefore, we will need to use a TIP120 transistor, a 1k Ohm resistor, and a diode to provide 
+                    enough power.
+                </p>
+                <p>
+                    An optional hardware piece is the LCD module. We chose to use one because it allows us to display data
+                    directly to the LCD screen module for debugging purposes. 
+                </p>
+                <h2>Software Required</h2>
+                <p>
+                    NPM
+                </p>
+                <p>
+                    MongoDB
+                </p>
+                <p>
+                    Arduino IDE
+                </p>
+                <h2>Languages Being Used</h2>
+                <p>
+                    C++
+                </p>
+                <p>
+                    Objective-C    
+                </p>
+                <p>
+                    NodeJS    
+                </p>
+                <p>
+                    HTML    
+                </p>
+                <p>
+                    CSS    
+                </p>    
                 <h1 id="project_install">
                     How to install:
                 </h1>
