@@ -105,9 +105,11 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="Garden" image="apples_24" id="acW-dT-cKf"/>
                     <connections>
-                        <outlet property="details" destination="adM-Yb-uXr" id="jI3-rX-aUq"/>
-                        <outlet property="detailsButton" destination="adM-Yb-uXr" id="pBL-1U-rNU"/>
-                        <outlet property="tempImageView" destination="gli-n7-Jf5" id="9VM-VE-hlc"/>
+                        <outlet property="detailsButton" destination="adM-Yb-uXr" id="W2v-SS-rwY"/>
+                        <outlet property="gardenTitleLabel" destination="U1n-tD-NbQ" id="yoG-pr-pOc"/>
+                        <outlet property="humidityLabel" destination="wdz-5A-Mta" id="5BU-Jf-Gel"/>
+                        <outlet property="sprinklerLabel" destination="3E0-Ez-2Sm" id="Ewk-dw-vGz"/>
+                        <outlet property="tempLabel" destination="4fF-wQ-rsR" id="K2u-74-Yrg"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="W5J-7L-Pyd" sceneMemberID="firstResponder"/>
@@ -234,6 +236,8 @@
                     </view>
                     <tabBarItem key="tabBarItem" systemItem="search" id="cPa-gy-q4n"/>
                     <connections>
+                        <outlet property="endDateLabel" destination="j13-bA-vOY" id="tOs-t9-FBg"/>
+                        <outlet property="startDateLabel" destination="Rik-pX-peT" id="a0M-Ol-aDg"/>
                         <outlet property="tableView" destination="UrM-02-aod" id="zz9-Ts-XpF"/>
                     </connections>
                 </viewController>
