@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		50469583204B5F1A00DE9F7E /* MyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50469582204B5F1A00DE9F7E /* MyCell.swift */; };
 		505602ED204B955700AB602F /* Growing_Plant.gif in Resources */ = {isa = PBXBuildFile; fileRef = 505602EC204B955600AB602F /* Growing_Plant.gif */; };
+		509199DF2096E81900789280 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 509199DE2096E81900789280 /* SettingsViewController.swift */; };
 		50C64CB5204767AD00586769 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C64CB4204767AD00586769 /* AppDelegate.swift */; };
 		50C64CB7204767AD00586769 /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C64CB6204767AD00586769 /* FirstViewController.swift */; };
 		50C64CB9204767AD00586769 /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C64CB8204767AD00586769 /* SecondViewController.swift */; };
@@ -39,6 +40,7 @@
 /* Begin PBXFileReference section */
 		50469582204B5F1A00DE9F7E /* MyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCell.swift; sourceTree = "<group>"; };
 		505602EC204B955600AB602F /* Growing_Plant.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; name = Growing_Plant.gif; path = ../../Icons/Growing_Plant.gif; sourceTree = "<group>"; };
+		509199DE2096E81900789280 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SettingsViewController.swift; path = SmartGarden/SettingsViewController.swift; sourceTree = "<group>"; };
 		50C64CB1204767AD00586769 /* SmartGarden.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SmartGarden.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		50C64CB4204767AD00586769 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		50C64CB6204767AD00586769 /* FirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
@@ -83,6 +85,7 @@
 		50C64CA8204767AC00586769 = {
 			isa = PBXGroup;
 			children = (
+				509199DE2096E81900789280 /* SettingsViewController.swift */,
 				50C64CB3204767AD00586769 /* SmartGarden */,
 				50C64CCA204767AD00586769 /* SmartGardenTests */,
 				50C64CD5204767AD00586769 /* SmartGardenUITests */,
@@ -272,6 +275,7 @@
 				50C64CB9204767AD00586769 /* SecondViewController.swift in Sources */,
 				50469583204B5F1A00DE9F7E /* MyCell.swift in Sources */,
 				50C64CB5204767AD00586769 /* AppDelegate.swift in Sources */,
+				509199DF2096E81900789280 /* SettingsViewController.swift in Sources */,
 				50C64CB7204767AD00586769 /* FirstViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

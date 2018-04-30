@@ -248,7 +248,7 @@
         <!--Settings-->
         <scene sceneID="9Vs-BZ-D8e">
             <objects>
-                <viewController id="Qcc-JT-00i" sceneMemberID="viewController">
+                <viewController id="Qcc-JT-00i" customClass="SettingsViewController" customModule="SmartGarden" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="jpP-qy-QAI">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -304,6 +304,11 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="Settings" image="settings_24" id="q6f-yd-yud"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="createWaterButton" destination="9xt-SZ-q3F" id="qCs-Ml-PdH"/>
+                        <outlet property="dataButton" destination="dCu-ic-F3C" id="QRj-5J-4xm"/>
+                        <outlet property="setWaterButton" destination="qw9-ju-JNA" id="2vQ-kJ-F9t"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uNF-5v-h0n" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -692,6 +697,6 @@
         <image name="settings_24" width="24" height="24"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="a6F-VE-dBv"/>
+        <segue reference="X2X-BS-yo0"/>
     </inferredMetricsTieBreakers>
 </document>
