@@ -314,10 +314,10 @@
             </objects>
             <point key="canvasLocation" x="877.60000000000002" y="998.95052473763121"/>
         </scene>
-        <!--View Controller-->
+        <!--Data Recorded View Controller-->
         <scene sceneID="R7H-la-HVS">
             <objects>
-                <viewController id="okW-Do-cGl" sceneMemberID="viewController">
+                <viewController id="okW-Do-cGl" customClass="DataRecordedViewController" customModule="SmartGarden" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="plP-Pj-EL6">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -456,10 +456,10 @@
             </objects>
             <point key="canvasLocation" x="1933.5999999999999" y="998.95052473763121"/>
         </scene>
-        <!--View Controller-->
+        <!--Set Schedule View Controller-->
         <scene sceneID="ITx-08-5P8">
             <objects>
-                <viewController id="k8m-Gy-joU" sceneMemberID="viewController">
+                <viewController id="k8m-Gy-joU" customClass="SetScheduleViewController" customModule="SmartGarden" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="2Cl-Jz-LkB">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -576,10 +576,10 @@
             </objects>
             <point key="canvasLocation" x="1934" y="1731"/>
         </scene>
-        <!--View Controller-->
+        <!--Schedule Details View Controller-->
         <scene sceneID="umq-A6-4ka">
             <objects>
-                <viewController id="aCs-LW-0So" sceneMemberID="viewController">
+                <viewController id="aCs-LW-0So" customClass="ScheduleDetailsViewController" customModule="SmartGarden" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="uRI-p1-ZNK">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -661,6 +661,13 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="g4O-op-LcB"/>
                     </view>
+                    <connections>
+                        <outlet property="durationTextField" destination="QgJ-Kt-e9s" id="I6a-iP-SLO"/>
+                        <outlet property="nameTextField" destination="e6v-ef-MVn" id="yDs-hm-6Ws"/>
+                        <outlet property="repeatSwitch" destination="eJL-ZO-Lh6" id="4PD-RZ-nmN"/>
+                        <outlet property="repeatTextField" destination="K0B-5A-k6f" id="Cba-DE-k8v"/>
+                        <outlet property="timeTextField" destination="og2-Uk-6sc" id="hxH-Pm-zKj"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eFR-Y0-Ptd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -697,6 +704,6 @@
         <image name="settings_24" width="24" height="24"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="X2X-BS-yo0"/>
+        <segue reference="a6F-VE-dBv"/>
     </inferredMetricsTieBreakers>
 </document>
