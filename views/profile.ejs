@@ -11,73 +11,70 @@
         <% include ./partials/header %>
     </header>
     <div class="container">
-
         <div class="page-header text-center">
             <h1>
-                <img src="smartGarden_icon.png" width="290" height="410" />
+                <img src="smartGarden_icon.png" width="150" height="200" />
                 <br/>
                 <br/>Profile Page</h1>
+            <a href="/account" class="btn btn-default btn-sm">Account</a>
             <a href="/logout" class="btn btn-default btn-sm">Logout</a>
         </div>
 
-        <div class="row">
 
-            <!-- LOCAL INFORMATION -->
-            <div class="col-sm-6">
+        <div class="row">
+            <!-- Gardens -->
+            <div class="col-sm-12">
                 <div class="well">
                     <h3>
-                        <span class="fa fa-user"></span> Local</h3>
+                        <i class="material-icons" style="font-size:36px">
+                            spa
+                        </i> Gardens
+                        <!-- Trigger the modal with a button -->
+                        <button type="button" class="btn btn-info btn-sm pull-right" data-toggle="modal" data-target="#createGardenModal">Create Garden</button>
+                        <br>
+                    </h3>
+                    <!-- Modal -->
+                    <div class="modal fade" id="createGardenModal" role="dialog">
+                        <div class="modal-dialog">
 
-                    <% if (user.local.email) { %>
-                        <p>
-                            <strong>id</strong>:
-                            <%= user._id %>
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title">Create a new Garden</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="/profile" method="post">
+                                        <div class="form-group">
+                                            <label>Garden Name</label>
+                                            <input type="text" class="form-control" name="gardenName">
+                                        </div>
+                                        <button type="submit" class="btn btn-default">Create</button>
+                                    </form>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <br>
+
+                    <div class="row">
+                        <% gardens.forEach(function (garden) { %>
+                            <div class="col-sm-4">
                                 <br>
-                                <strong>email</strong>:
-                                <%= user.local.email %>
+                                <b>Garden Name: </b>
+                                <%= garden.gardenName %>
                                     <br>
-                                    <strong>password</strong>:
-                                    <%= user.local.password %>
-                        </p>
-
-                        <a href="/unlink/local" class="btn btn-default">Unlink</a>
-                        <% } else { %>
-                            <a href="/connect/local" class="btn btn-default">Connect Local</a>
-                            <% } %>
-
+                                    <b>Garden Created: </b>
+                                    <%= garden.created_at %>
+                                    <br><br>
+                                    <button type="button" class="btn btn-info btn-sm">Open Garden</button>
+                            </div>
+                            <% }) %>
+                    </div>
                 </div>
             </div>
-
-            <!-- GOOGLE INFORMATION -->
-            <div class="col-sm-6">
-                <div class="well">
-                    <h3 class="text-danger">
-                        <span class="fa fa-google-plus"></span> Google+</h3>
-
-                    <!-- check if the user has this token (is the user authenticated with this social account) -->
-                    <% if (user.google.token) { %>
-                        <p>
-                            <strong>id</strong>:
-                            <%= user.google.id %>
-                                <br>
-                                <strong>token</strong>:
-                                <%= user.google.token %>
-                                    <br>
-                                    <strong>email</strong>:
-                                    <%= user.google.email %>
-                                        <br>
-                                        <strong>name</strong>:
-                                        <%= user.google.name %>
-                        </p>
-
-                        <a href="/unlink/google" class="btn btn-danger">Unlink</a>
-                        <% } else { %>
-                            <a href="/connect/google" class="btn btn-danger">Connect Google</a>
-                            <% } %>
-
-                </div>
-            </div>
-
         </div>
 
     </div>
