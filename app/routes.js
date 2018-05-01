@@ -75,7 +75,7 @@ module.exports = function (app, passport) {
     // we will use route middleware to verify this (the isLoggedIn function)
     app.get('/profile', isLoggedIn, function (req, res) {
 
-        Garden.find({'username': req.user.local.email}, function (err, garden) {
+        Garden.find({ $or: [{ 'username': req.user.local.email }, { 'username': req.user.google.email }] }, function (err, garden) {
             res.render('profile.ejs', {
                 user: req.user,
                 gardens: garden
@@ -90,7 +90,13 @@ module.exports = function (app, passport) {
         var garden = new Garden();
 
         garden.gardenName = req.body.gardenName;
-        garden.username = req.user.local.email;
+
+        if (req.user.local.username) {
+            garden.username = req.user.local.email;
+        }
+        else if (req.user.google.email) {
+            garden.username = req.user.google.email;
+        }
 
         garden.save(function (err) {
             if (err) {
