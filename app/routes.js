@@ -75,7 +75,7 @@ module.exports = function (app, passport) {
     // we will use route middleware to verify this (the isLoggedIn function)
     app.get('/profile', isLoggedIn, function (req, res) {
 
-        Garden.find({}, function (err, garden) {
+        Garden.find({'username': req.user.local.email}, function (err, garden) {
             res.render('profile.ejs', {
                 user: req.user,
                 gardens: garden
