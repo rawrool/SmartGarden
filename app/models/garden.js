@@ -3,7 +3,7 @@ var Schema = mongoose.Schema;
 
 // creating the schema
 var gardenSchema = new Schema({
-    gardenName: {type: String, required: true, unique: true},
+    gardenName: {type: String, required: true, unique: false},
     username: {type: String, required: true, unique: false}, 
     created_at: Date,
     updated_at: Date

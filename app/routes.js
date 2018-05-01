@@ -78,7 +78,8 @@ module.exports = function (app, passport) {
         Garden.find({ $or: [{ 'username': req.user.local.email }, { 'username': req.user.google.email }] }, function (err, garden) {
             res.render('profile.ejs', {
                 user: req.user,
-                gardens: garden
+                gardens: garden,
+                message: req.flash('duplicateMessage')
             });
         });
     });
@@ -86,24 +87,36 @@ module.exports = function (app, passport) {
 
     // fix post for creating a new garden on profile page
     app.post('/profile', isLoggedIn, function (req, res) {
-        console.log("posting?");
+
         var garden = new Garden();
 
-        garden.gardenName = req.body.gardenName;
+        garden.gardenName = req.body.gardenName.trim();
 
-        if (req.user.local.username) {
-            garden.username = req.user.local.email;
+        var google = req.user.google.email;
+        var local = req.user.local.email;
+
+        if (typeof local !== 'undefined' && local !== "undefined") {
+            garden.username = local;
         }
-        else if (req.user.google.email) {
-            garden.username = req.user.google.email;
+        else if (typeof google !== 'undefined' && google !== "undefined") {
+            garden.username = google;
         }
 
         garden.save(function (err) {
             if (err) {
-                throw err;
+                if (err.code === 11000) {
+                    req.flash('duplicateMessage', 'That Garden name exists!');
+                    res.redirect('/profile');
+                }
             }
             else {
-                res.redirect('/profile');
+                Garden.find({ $or: [{ 'username': req.user.local.email }, { 'username': req.user.google.email }] }, function (err, garden) {
+                    res.render('profile.ejs', {
+                        user: req.user,
+                        gardens: garden,
+                        message: req.flash('Nothing')
+                    });
+                });
             }
         });
     });
