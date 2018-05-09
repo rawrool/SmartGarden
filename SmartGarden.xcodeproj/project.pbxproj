@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		50469583204B5F1A00DE9F7E /* MyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50469582204B5F1A00DE9F7E /* MyCell.swift */; };
-		505602ED204B955700AB602F /* Growing_Plant.gif in Resources */ = {isa = PBXBuildFile; fileRef = 505602EC204B955600AB602F /* Growing_Plant.gif */; };
 		509199DF2096E81900789280 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 509199DE2096E81900789280 /* SettingsViewController.swift */; };
 		509199E12096ECD200789280 /* DataRecordedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 509199E02096ECD200789280 /* DataRecordedViewController.swift */; };
 		509199E32096ED7E00789280 /* SetScheduleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 509199E22096ED7E00789280 /* SetScheduleViewController.swift */; };
@@ -42,11 +41,10 @@
 
 /* Begin PBXFileReference section */
 		50469582204B5F1A00DE9F7E /* MyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCell.swift; sourceTree = "<group>"; };
-		505602EC204B955600AB602F /* Growing_Plant.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; name = Growing_Plant.gif; path = ../../Icons/Growing_Plant.gif; sourceTree = "<group>"; };
 		509199DE2096E81900789280 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		509199E02096ECD200789280 /* DataRecordedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DataRecordedViewController.swift; path = SmartGarden/DataRecordedViewController.swift; sourceTree = "<group>"; };
 		509199E22096ED7E00789280 /* SetScheduleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SetScheduleViewController.swift; path = SmartGarden/SetScheduleViewController.swift; sourceTree = "<group>"; };
-		509199E42096EDBE00789280 /* ScheduleDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ScheduleDetailsViewController.swift; path = SmartGarden/ScheduleDetailsViewController.swift; sourceTree = "<group>"; };
+		509199E42096EDBE00789280 /* ScheduleDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleDetailsViewController.swift; sourceTree = "<group>"; };
 		50C64CB1204767AD00586769 /* SmartGarden.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SmartGarden.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		50C64CB4204767AD00586769 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		50C64CB6204767AD00586769 /* FirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
@@ -93,7 +91,6 @@
 			children = (
 				509199E02096ECD200789280 /* DataRecordedViewController.swift */,
 				509199E22096ED7E00789280 /* SetScheduleViewController.swift */,
-				509199E42096EDBE00789280 /* ScheduleDetailsViewController.swift */,
 				50C64CB3204767AD00586769 /* SmartGarden */,
 				50C64CCA204767AD00586769 /* SmartGardenTests */,
 				50C64CD5204767AD00586769 /* SmartGardenUITests */,
@@ -119,9 +116,9 @@
 				50C64CB6204767AD00586769 /* FirstViewController.swift */,
 				50C64CB8204767AD00586769 /* SecondViewController.swift */,
 				50469582204B5F1A00DE9F7E /* MyCell.swift */,
+				509199E42096EDBE00789280 /* ScheduleDetailsViewController.swift */,
 				50C64CBA204767AD00586769 /* Main.storyboard */,
 				50C64CBD204767AD00586769 /* Assets.xcassets */,
-				505602EC204B955600AB602F /* Growing_Plant.gif */,
 				50C64CBF204767AD00586769 /* LaunchScreen.storyboard */,
 				50C64CC2204767AD00586769 /* Info.plist */,
 			);
@@ -253,7 +250,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				505602ED204B955700AB602F /* Growing_Plant.gif in Resources */,
 				50C64CC1204767AD00586769 /* LaunchScreen.storyboard in Resources */,
 				50C64CBE204767AD00586769 /* Assets.xcassets in Resources */,
 				50C64CBC204767AD00586769 /* Main.storyboard in Resources */,
@@ -455,12 +451,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 54983AJFD2;
 				INFOPLIST_FILE = SmartGarden/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2.5;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = Shortino.SmartGarden;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -469,12 +467,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 54983AJFD2;
 				INFOPLIST_FILE = SmartGarden/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2.5;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = Shortino.SmartGarden;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

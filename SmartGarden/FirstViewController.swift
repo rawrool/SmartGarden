@@ -32,6 +32,11 @@ class FirstViewController: UIViewController {
         detailsButton.layer.cornerRadius = 10
         detailsButton.clipsToBounds = true
     }
+    
+    @IBAction func unwindSegue(_ sender : UIStoryboard){
+        
+    }
+
 
     //automatically created function
     override func didReceiveMemoryWarning() {
