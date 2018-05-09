@@ -1,16 +1,16 @@
-//////////////////////
+////////////////////////
 // Libraries Included //
-//////////////////////
-#include <SoftwareSerial.h> // Allows serial communication on 0 and 1 digital pins of the Arduino
-#include <SparkFunESP8266WiFi.h> // Specific library created by SparkFun for their ESP8266 WiFi Shield
-#include <dht.h> // Library for temperature and humidity sensor
-#include <LiquidCrystal.h> // Library for LCD screen
+////////////////////////
+#include <SoftwareSerial.h>       // Allows serial communication on 0 and 1 digital pins of the Arduino
+#include <SparkFunESP8266WiFi.h>  // Specific library created by SparkFun for their ESP8266 WiFi Shield
+#include <dht.h>                  // Library for temperature and humidity sensor
+#include <LiquidCrystal.h>        // Library for LCD screen
 
 //////////////////////////////
 // WiFi Network Parameters  //
 //////////////////////////////
-const char mySSID[] = "";  // network's name
-const char myPSK[] = ""; // password for the network
+const char mySSID[] = "";    // network's name
+const char myPSK[] = "";  // password for the network
 
 //////////////////////////////
 // ESP8266Server Definition //
@@ -28,6 +28,10 @@ LiquidCrystal lcd(11, 12, 2, 3, 4, 5);
 dht DHT;              // Initialize the sensor
 #define DHT11_PIN 7   // DHT (Humidity&Temp) data pin connected to Arduino's 7th pin
 
+////////////////////////////////////////
+// Water Solenoid Valve Pin Set-up    //
+////////////////////////////////////////
+int waterPin = 6;
 
 //////////////////
 // HTTP Strings //
@@ -74,11 +78,14 @@ void setup()
   // and the network it's connected to.
   displayConnectInfo();
 
-  //serialTrigger(F("Press any key to connect client."));
-  //clientDemo();
+  serialTrigger(F("Press any key to connect client."));
+  clientDemo();
   
   serialTrigger(F("Press any key to test server."));
   serverSetup();
+
+  // set pin for water solenoid valve as output
+  pinMode(waterPin, OUTPUT);   
 }
 
 void loop() 
@@ -86,6 +93,7 @@ void loop()
   serverDemo();
   displayOnLCD();
   displaySoilMoistureToLCD();
+  waterGarden(10);
 }
 
 void initializeESP8266()
@@ -104,7 +112,6 @@ void initializeESP8266()
   Serial.println(F("ESP8266 Shield Present"));
 }
 
-// connects to wifi
 void connectESP8266()
 {
   // The ESP8266 can be set to one of three modes:
@@ -310,6 +317,7 @@ void displayOnLCD()
   // sensor originally measure temp in C, so we converted to F
   float tempF = (DHT.temperature*1.8) + 32;
   float humidity = DHT.humidity;  // measured in %
+  // clear lcd screen
   lcd.clear();
   // lcd screen has only 2 rows
   lcd.setCursor(0,0); // sets cursor to print on first row first column
@@ -335,6 +343,7 @@ void displaySoilMoistureToLCD()
 {
   soilSensorValue = analogRead(soilSensorPin);
   soilPercentage = convertToPercentage(soilSensorValue);
+  // clear lcd screen
   lcd.clear();
   lcd.setCursor(0,0); // sets cursor to print on first row first column
   lcd.print("Soil Value: ");
@@ -344,4 +353,14 @@ void displaySoilMoistureToLCD()
   lcd.print(soilPercentage);
   lcd.print("%");
   delay(3000);
+}
+
+void waterGarden(int seconds)
+{
+  // convert seconds to ms
+  int timeInSeconds = seconds*1000;
+  digitalWrite(waterPin, HIGH);  //Switch Solenoid ON
+  delay(timeInSeconds);          //Delay for set amount of time before turning off 
+  digitalWrite(waterPin, LOW);   //Switch Solenoid OFF
+  delay(1000);                   //Wait 1 Second
 }
