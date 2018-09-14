@@ -9,6 +9,7 @@
     "ejs": "~2.5.2",
     "express": "~4.14.0",
     "express-session": "~1.14.1",
+    "joi": "^13.6.0",
     "jsonwebtoken": "^8.2.1",
     "method-override": "~2.3.6",
     "mongoose": "~4.13.1",
