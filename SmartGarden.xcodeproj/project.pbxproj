@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		50046644214F51060000188B /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50046643214F51060000188B /* LoginViewController.swift */; };
-		50046646214F57320000188B /* GardenSelectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50046645214F57320000188B /* GardenSelectViewController.swift */; };
 		50046648214F578A0000188B /* GardenTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50046647214F578A0000188B /* GardenTableViewController.swift */; };
 		50469583204B5F1A00DE9F7E /* MyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50469582204B5F1A00DE9F7E /* MyCell.swift */; };
 		509199DF2096E81900789280 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 509199DE2096E81900789280 /* SettingsViewController.swift */; };
@@ -44,7 +43,6 @@
 
 /* Begin PBXFileReference section */
 		50046643214F51060000188B /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
-		50046645214F57320000188B /* GardenSelectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GardenSelectViewController.swift; sourceTree = "<group>"; };
 		50046647214F578A0000188B /* GardenTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GardenTableViewController.swift; sourceTree = "<group>"; };
 		50469582204B5F1A00DE9F7E /* MyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCell.swift; sourceTree = "<group>"; };
 		509199DE2096E81900789280 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
@@ -118,7 +116,6 @@
 			isa = PBXGroup;
 			children = (
 				50046643214F51060000188B /* LoginViewController.swift */,
-				50046645214F57320000188B /* GardenSelectViewController.swift */,
 				50046647214F578A0000188B /* GardenTableViewController.swift */,
 				509199DE2096E81900789280 /* SettingsViewController.swift */,
 				50C64CB4204767AD00586769 /* AppDelegate.swift */,
@@ -288,7 +285,6 @@
 			files = (
 				50046644214F51060000188B /* LoginViewController.swift in Sources */,
 				509199E52096EDBE00789280 /* ScheduleDetailsViewController.swift in Sources */,
-				50046646214F57320000188B /* GardenSelectViewController.swift in Sources */,
 				509199E12096ECD200789280 /* DataRecordedViewController.swift in Sources */,
 				509199E32096ED7E00789280 /* SetScheduleViewController.swift in Sources */,
 				50C64CB9204767AD00586769 /* SecondViewController.swift in Sources */,

@@ -14,7 +14,16 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var loginButton: UIButton!
     
     @IBAction func loginButtonTapped(_ sender: Any) {
+        //place user login verification here
         
+        if (usernameText.text == "hi"){
+            //this line will segue to the garden select screen
+            //verify user login before this
+            performSegue(withIdentifier: "loggedIn", sender: sender)
+        }
+        else {
+            showAlert();
+        }
     }
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,5 +48,13 @@ class LoginViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
-
+    
+    
+    func showAlert() {
+        let alertController = UIAlertController(title: "Login Error", message:
+            "Unable to login with that username/password.", preferredStyle: UIAlertControllerStyle.alert)
+        alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default,handler: nil))
+        
+        self.present(alertController, animated: true, completion: nil)
+    }
 }

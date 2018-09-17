@@ -9,7 +9,9 @@
 import UIKit
 
 class GardenTableViewController: UITableViewController {
-
+    //sample garden names
+    let gardens = ["Cabbage", "Carrots", "Basil", "Tomatoes"]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
