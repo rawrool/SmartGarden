@@ -825,6 +825,9 @@
                             <outlet property="delegate" destination="xuC-oN-9nS" id="dfs-P9-Vs7"/>
                         </connections>
                     </tableView>
+                    <connections>
+                        <segue destination="49e-Tb-3d3" kind="show" identifier="gardenSelected" id="hTx-bw-Mrq"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LqP-ca-Jws" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
