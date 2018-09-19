@@ -22,7 +22,7 @@ class LoginViewController: UIViewController {
             performSegue(withIdentifier: "loggedIn", sender: sender)
         }
         else {
-            showAlert();
+            loginErrorAlert();
         }
     }
     override func viewDidLoad() {
@@ -54,7 +54,7 @@ class LoginViewController: UIViewController {
     */
     
     
-    func showAlert() {
+    func loginErrorAlert() {
         let alertController = UIAlertController(title: "Login Error", message:
             "Unable to login with that username/password.", preferredStyle: UIAlertControllerStyle.alert)
         alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default,handler: nil))
