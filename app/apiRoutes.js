@@ -4,6 +4,11 @@ module.exports = function (app, passport, express) {
     var Garden = require('./models/garden');
     var Plant = require('./models/plant');
 
+    /* the Joi class is needed for input validation
+
+    */
+    const Joi = require('joi');
+
     // get an instance of the router for api routes
     var apiRoutes = express.Router();
 
@@ -44,7 +49,7 @@ module.exports = function (app, passport, express) {
                         };
 
                         var token = jwt.sign(payload, app.get('smartSecret'), {
-                            expiresIn: 1440 // expires n 24 hours
+                            expiresIn: "30 days" // expires n 24 hours
                         });
 
                         // return the information including token as JSON
@@ -120,33 +125,84 @@ module.exports = function (app, passport, express) {
     apiRoutes.route('/gardens')
 
         .get(function (req, res) {
-            var username = req.headers['email'];
 
-            Garden.find({ 'username': username }, function (err, gardens) {
-                if (gardens.length > 0) {
-                    res.json(gardens);
-                }
-                else {
-                    res.json({ message: 'No Gardens!' });
-                }
-            });
+            /*
+                retrieving the value of email in the header so that we can validate it
+            */
+            const header_email = { email: req.headers['email'] };
+
+            /*
+                schema for the properties that we will need to validate.
+            */
+            const schema = {
+                email: Joi.string().email({ minDomainAtoms: 2 }).required()
+            };
+
+
+            // we call the validate function and give it the value of 
+            // the email along with the properties to check
+            const result = Joi.validate(header_email, schema);
+
+
+            // if it results in an error, we let the user know why they go an error.
+            if (result.error) {
+                //400 bad request
+                res.status(400).send(result.error.details[0].message);
+            }
+            else {
+                var username = req.headers['email'];
+
+                Garden.find({ 'username': username }, function (err, gardens) {
+                    if (gardens.length > 0) {
+                        res.json(gardens);
+                    }
+                    else {
+                        res.json({ message: 'No Gardens!' });
+                    }
+                });
+            }
         })
 
-        .post(function(req, res){
+        .post(function (req, res) {
             var garden = new Garden(); // create a new instance of the garden model.
 
-            garden.gardenName = req.body.gardenName;
-            garden.username = req.body.email;
+            /*
+                retrieving the value of the email and the gardenName so that
+                we can validate the data.
+            */
+            const header_create = { gardenName: req.body.gardenName, username: req.body.email }
 
-            // save the garden and check for errors
-            garden.save(function(err){
-                if(err){
-                    res.send(err);
-                }
-                else{
-                    res.json({message: 'Garden Created'});
-                }
-            });
+            /*
+                schema for the properties that we will need to validate
+            */
+            const schema = {
+                gardenName: Joi.string().min(4).required(),
+                username: Joi.string().email({ minDomainAtoms: 2 }).required()
+            };
+
+            // we call the validate function and give it the value of
+            // the email/username and the gardenName
+            const result = Joi.validate(header_create, schema);
+
+            if (result.error) {
+                // 400 bad request if the information provided does not
+                // match the schema
+                res.status(400).send(result.error.details[0].message);
+            }
+            else {
+                garden.gardenName = req.body.gardenName;
+                garden.username = req.body.email;
+
+                // save the garden and check for errors
+                garden.save(function (err) {
+                    if (err) {
+                        res.send(err);
+                    }
+                    else {
+                        res.json({ message: 'Garden Created' });
+                    }
+                });
+            }
         })
 
 
@@ -170,19 +226,19 @@ module.exports = function (app, passport, express) {
             })
         })
 
-        .post(function(req, res){
+        .post(function (req, res) {
             var plant = new Plant();
 
             plant.gardenName = req.body.gardenName;
             plant.username = req.body.email;
             plant.plantName = req.body.plantName;
 
-            plant.save(function(err){
-                if(err){
+            plant.save(function (err) {
+                if (err) {
                     res.send(err);
                 }
-                else{
-                    res.json({message: 'Plant created successfully'});
+                else {
+                    res.json({ message: 'Plant created successfully' });
                 }
             });
         })
