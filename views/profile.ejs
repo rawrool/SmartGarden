@@ -35,7 +35,9 @@
                                     spa
                                 </i> Gardens
                                 <!-- Trigger the modal with a button -->
-                                <button type="button" class="btn btn-info btn-sm pull-right" data-toggle="modal" data-target="#createGardenModal">Create Garden</button>
+                                <button type="button" class="btn btn-info btn-sm pull-right" data-toggle="modal" data-target="#createGardenModal">Create
+                                    Garden
+                                </button>
                                 <br>
                             </h3>
                             <!-- Modal -->
@@ -75,8 +77,14 @@
                                             <%= garden.created_at %>
                                                 <br>
                                                 <br>
-                                                <button type="button" class="btn btn-info btn-sm">Open Garden</button>
-                                                <button type="button" class="btn btn-danger btn-sm pull-right" data-toggle="modal" data-target="#deleteGarden">Delete Garden</button>
+                                                    <form action="/profile/:<%= garden.gardenName %>" method="get">
+                                                        <button type="submit" class="btn btn-info btn-sm pull-left">Open Garden</button>
+                                                    </form>
+                                                    <form action="/profile/:<%= garden.gardenName %>" method="post">
+                                                        <button type="submit" class="btn btn-danger btn-sm pull-right" data-toggle="modal" data-target="#deleteGarden">Delete
+                                                            Garden
+                                                        </button>
+                                                    </form>
                                     </div>
                                     <% }) %>
                             </div>
