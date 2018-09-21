@@ -121,6 +121,47 @@ module.exports = function (app, passport) {
         });
     });
 
+    app.get('/profile/:id', isLoggedIn, function (req, res) {
+
+        // get the garden to display
+        let gardenO = req.params.id.trim();
+
+        gardenO = gardenO.replace(':', '');
+
+        console.log("***OPENING GARDEN: " + gardenO);
+
+        // make proper call to display the garden
+
+
+        // render the garden page
+        res.redirect('/profile');
+    });
+
+    app.post('/profile/:id', isLoggedIn, function (req, res) {
+
+
+        // get the garden to delete
+        let gardenD = req.params.id.trim();
+
+        gardenD = gardenD.replace(':', '');
+
+        console.log("***DELETING GARDEN: " + gardenD);
+
+        // make proper call to delete the garden
+
+        Garden.deleteOne({ gardenName: gardenD }, function (err, garden) {
+
+            if (err) {
+                req.flash('duplicateMessage', 'That garden does not exists!');
+                res.redirect('/profile');
+            }
+        });
+
+
+        // render the account page
+
+        res.redirect('/profile');
+    });
 
     // =====================================
     // ACCOUNT PAGE ========================
