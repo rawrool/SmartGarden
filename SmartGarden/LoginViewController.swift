@@ -14,16 +14,24 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var loginButton: UIButton!
     
     @IBAction func loginButtonTapped(_ sender: Any) {
-        //place user login verification here
         
-        if (usernameText.text == "hi"){
+        //does not work yet
+        if (attemptLogin( username:usernameText.text!, password:passwordText.text!)){
+            performSegue(withIdentifier: "loggedIn", sender: sender)
+        }
+        else{
+            loginErrorAlert()
+        }
+        
+        /* Was using to advance to next screen
+         if (usernameText.text == "hi"){
             //this line will segue to the garden select screen
             //verify user login before this
             performSegue(withIdentifier: "loggedIn", sender: sender)
         }
         else {
             loginErrorAlert();
-        }
+        }*/
     }
     override func viewDidLoad() {
         super.viewDidLoad()
