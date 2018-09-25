@@ -8,7 +8,15 @@
 
 import Foundation
 
+struct LoginResponse:Decodable{
+    let success:String
+    let message:String
+    let token:String
+}
+
 func attemptLogin(username:String, password:String) -> Bool{
+    print("Made it into the attemptLogin function -----------")
+    var successful:Bool = false
     let headers = [
         "content-type": "application/json",
         "cache-control": "no-cache"
@@ -21,7 +29,9 @@ func attemptLogin(username:String, password:String) -> Bool{
         ] as [String : Any]
     
     do{
+        print("--------Beginning of do block")
         let postData = try JSONSerialization.data(withJSONObject: parameters, options: [])
+        print("--------postData variable set")
         let request = NSMutableURLRequest(url: NSURL(string: "http://ec2-18-191-18-131.us-east-2.compute.amazonaws.com/api/authenticate")! as URL,
                                           cachePolicy: .useProtocolCachePolicy,
                                           timeoutInterval: 10.0)
@@ -29,17 +39,18 @@ func attemptLogin(username:String, password:String) -> Bool{
         request.httpMethod = "POST"
         request.allHTTPHeaderFields = headers
         request.httpBody = postData as Data
-        
+        print("--------request variable set")
         let session = URLSession.shared
-        
+        print("--------session variable set")
         let dataTask = session.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
-            
+            print("--------In the session")
             if (error != nil) {
                 print(error as Any)
                 
             } else {
                 let httpResponse = response as? HTTPURLResponse
                 print(httpResponse as Any)
+                successful = true
             }
         })
         dataTask.resume()
@@ -48,9 +59,13 @@ func attemptLogin(username:String, password:String) -> Bool{
         print("Caught error: ", error)
         return false
     }
-    return true
+    return successful
 }
 
-func setToken(token:String){
+func setToken(serverResponse:HTTPURLResponse){
+    
+    /*guard let loginResponse = try? JSONDecoder().decode(LoginResponse.self, from: serverResponse as Data)
+        else { print("Error decoding data into LoginResponse")
+        return}*/
     
 }

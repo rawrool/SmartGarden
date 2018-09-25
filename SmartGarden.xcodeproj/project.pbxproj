@@ -48,10 +48,10 @@
 		50046647214F578A0000188B /* GardenTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GardenTableViewController.swift; sourceTree = "<group>"; };
 		50469582204B5F1A00DE9F7E /* MyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCell.swift; sourceTree = "<group>"; };
 		509199DE2096E81900789280 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
-		509199E02096ECD200789280 /* DataRecordedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DataRecordedViewController.swift; path = SmartGarden/DataRecordedViewController.swift; sourceTree = "<group>"; };
-		509199E22096ED7E00789280 /* SetScheduleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SetScheduleViewController.swift; path = SmartGarden/SetScheduleViewController.swift; sourceTree = "<group>"; };
+		509199E02096ECD200789280 /* DataRecordedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataRecordedViewController.swift; sourceTree = "<group>"; };
+		509199E22096ED7E00789280 /* SetScheduleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetScheduleViewController.swift; sourceTree = "<group>"; };
 		509199E42096EDBE00789280 /* ScheduleDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleDetailsViewController.swift; sourceTree = "<group>"; };
-		50A7B25B2159856300280E03 /* loginBackEnd.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = loginBackEnd.swift; path = SmartGarden/loginBackEnd.swift; sourceTree = "<group>"; };
+		50A7B25B2159856300280E03 /* loginBackEnd.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = loginBackEnd.swift; sourceTree = "<group>"; };
 		50C64CB1204767AD00586769 /* SmartGarden.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SmartGarden.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		50C64CB4204767AD00586769 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		50C64CB6204767AD00586769 /* FirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
@@ -97,9 +97,6 @@
 		50C64CA8204767AC00586769 = {
 			isa = PBXGroup;
 			children = (
-				50A7B25B2159856300280E03 /* loginBackEnd.swift */,
-				509199E02096ECD200789280 /* DataRecordedViewController.swift */,
-				509199E22096ED7E00789280 /* SetScheduleViewController.swift */,
 				50C64CB3204767AD00586769 /* SmartGarden */,
 				50C64CCA204767AD00586769 /* SmartGardenTests */,
 				50C64CD5204767AD00586769 /* SmartGardenUITests */,
@@ -120,6 +117,9 @@
 		50C64CB3204767AD00586769 /* SmartGarden */ = {
 			isa = PBXGroup;
 			children = (
+				50A7B25B2159856300280E03 /* loginBackEnd.swift */,
+				509199E02096ECD200789280 /* DataRecordedViewController.swift */,
+				509199E22096ED7E00789280 /* SetScheduleViewController.swift */,
 				50046643214F51060000188B /* LoginViewController.swift */,
 				50046647214F578A0000188B /* GardenTableViewController.swift */,
 				50D80D98215068DA0026BE58 /* GardenCell.swift */,

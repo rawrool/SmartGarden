@@ -17,6 +17,7 @@ class LoginViewController: UIViewController {
         
         //does not work yet
         if (attemptLogin( username:usernameText.text!, password:passwordText.text!)){
+            print("Done with trying to login and it was successful")
             performSegue(withIdentifier: "loggedIn", sender: sender)
         }
         else{
