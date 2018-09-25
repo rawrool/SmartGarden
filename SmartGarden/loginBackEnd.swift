@@ -42,19 +42,20 @@ func attemptLogin(username:String, password:String) -> Bool{
         
         let dataTask = session.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
             if (error != nil) {
+                print("Error sending request to server")
                 print(error as Any)
                 
             } else {
                 let httpResponse = response as? HTTPURLResponse
-                print(httpResponse as Any)
                 successful = true
+                print("Here is the response from the server")
+                print(httpResponse as Any)
             }
         })
         dataTask.resume()
     }
     catch{
         print("Caught error: ", error)
-        return false
     }
     
     return successful

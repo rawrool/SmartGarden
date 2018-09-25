@@ -16,8 +16,7 @@ class LoginViewController: UIViewController {
     @IBAction func loginButtonTapped(_ sender: Any) {
         
         //does not work yet
-        let login = attemptLogin( username:usernameText.text!, password:passwordText.text!)
-        if (login){
+        if (attemptLogin( username:usernameText.text!, password:passwordText.text!)){
             print("Done with trying to login and it was successful")
             performSegue(withIdentifier: "loggedIn", sender: sender)
         }
