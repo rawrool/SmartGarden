@@ -25,6 +25,7 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var passwordText: UITextField!
     @IBOutlet weak var loginButton: UIButton!
     
+    
     @IBAction func loginButtonTapped(_ sender: Any) {
        
         if (attemptLogin( username:usernameText.text!, password:passwordText.text!)){
@@ -41,8 +42,20 @@ class LoginViewController: UIViewController {
         //Next two lines rounds out the button to look more appealing
         loginButton.layer.cornerRadius = 10
         loginButton.clipsToBounds = true
+        
+        if let username = UserDefaults.standard.object(forKey: "username"){
+            usernameText.text = username as? String
+        }
     }
-
+    
+    override func viewDidAppear(_ animated: Bool) {
+        //Check if the user has a token and if so move past login screen
+        //need to see if token is valid
+        //if let token = UserDefaults.standard.object(forKey: "token"){
+            //performSegue(withIdentifier: "loggedIn", sender: self)
+        //}
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -73,8 +86,7 @@ class LoginViewController: UIViewController {
     }
     
     func attemptLogin(username:String, password:String) -> Bool{
-        
-        var successful = false
+        UserDefaults.standard.set(username, forKey: "username")
         let headers = [
             "content-type": "application/json"
         ]
@@ -106,25 +118,23 @@ class LoginViewController: UIViewController {
                 }
                 
                 do {
-                    
-                    
                     //create json object from data
                     if let json = try JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? [String: Any] {
-                        let token = json["token"]!
-                        print(token as Any)
+                        guard let token = json["token"] else { return }
+                        print("Setting Token")
                         UserDefaults.standard.set(token, forKey: "token")
                     }
                 } catch let error {
                     print(error.localizedDescription)
                 }
             })
+            
             dataTask.resume()
         }
         catch{
             print("Caught error: ", error)
+            return false
         }
-        
-        return successful
-        
+        return true
     }
 }
