@@ -759,7 +759,6 @@
                                 </state>
                                 <connections>
                                     <action selector="loginButtonTapped:" destination="vym-c2-zEa" eventType="touchUpInside" id="zTE-ID-R2r"/>
-                                    <action selector="test:" destination="vym-c2-zEa" eventType="touchUpInside" id="Ca0-RR-X92"/>
                                 </connections>
                             </button>
                             <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="U4C-UC-nGy">
