@@ -1,7 +1,7 @@
 // app/routes.js
 module.exports = function (app, passport) {
 
-    var Garden = require('./models/garden');
+    var userSchema = require('./models/userSchema');
 
     // =====================================
     // HOME PAGE (with login links) ========
@@ -75,50 +75,71 @@ module.exports = function (app, passport) {
     // we will use route middleware to verify this (the isLoggedIn function)
     app.get('/profile', isLoggedIn, function (req, res) {
 
-        Garden.find({ $or: [{ 'username': req.user.local.email }, { 'username': req.user.google.email }] }, function (err, garden) {
+
+        // finding the document that belongs to the user.
+        userSchema.find({ $or: [{ 'local.email': req.user.local.email }, { 'google.email': req.user.google.email }] }, function (err, uSchema) {
+
+            var arrclone;
+
+            // cloning the array of gardens to display on the profile page.
+            uSchema.forEach(element => {
+                arrclone = element.gardens.slice(0);
+            });
+
+            // this will render the profile page and it will set the values for user
+            // gardens, and message so that we can work with them in ejs.
             res.render('profile.ejs', {
                 user: req.user,
-                gardens: garden,
-                message: req.flash('duplicateMessage')
+                gardens: arrclone,
+                message: req.flash('duplicatedMessage')
             });
         });
+
     });
 
 
     // fix post for creating a new garden on profile page
     app.post('/profile', isLoggedIn, function (req, res) {
 
-        var garden = new Garden();
+        userSchema.find({ $or: [{ 'local.email': req.user.local.email }, { 'google.email': req.user.google.email }] }, function (err, uSchema) {
 
-        garden.gardenName = req.body.gardenName.trim();
+            // get the name of the garden from the headers and trim any extra white space
+            var nameG = req.body.gardenName.trim();
 
-        var google = req.user.google.email;
-        var local = req.user.local.email;
+            // concatenating the new garden name into the array of gardens.
+            uSchema[0].gardens = uSchema[0].gardens.concat({ name: nameG });
 
-        if (typeof local !== 'undefined' && local !== "undefined") {
-            garden.username = local;
-        }
-        else if (typeof google !== 'undefined' && google !== "undefined") {
-            garden.username = google;
-        }
-
-        garden.save(function (err) {
-            if (err) {
-                if (err.code === 11000) {
-                    req.flash('duplicateMessage', 'That Garden name exists!');
-                    res.redirect('/profile');
+            // saving the document with the changes that we have made
+            uSchema[0].save(function (err) {
+                if (err) {
+                    if (err.code === 11000) {
+                        req.flash('duplicateMessage', 'That Garden name exists!');
+                        res.redirect('/profile');
+                        console.log("**********THERE WAS AN ERROR********");
+                        console.log(err);
+                    }
+                    console.log(err);
                 }
-            }
-            else {
-                Garden.find({ $or: [{ 'username': req.user.local.email }, { 'username': req.user.google.email }] }, function (err, garden) {
+                else {
+
+                    var arrclone;
+
+                    // cloning the array of gardens to display on the profile page.
+                    uSchema.forEach(element => {
+                        arrclone = element.gardens.slice(0);
+                    });
+
+                    // this will render the profile page and it will set the values for user
+                    // gardens, and message so that we can work with them in ejs.
                     res.render('profile.ejs', {
                         user: req.user,
-                        gardens: garden,
-                        message: req.flash('Nothing')
+                        gardens: arrclone,
+                        message: req.flash('duplicatedMessage')
                     });
-                });
-            }
+                }
+            })
         });
+
     });
 
     app.get('/profile/:id', isLoggedIn, function (req, res) {
@@ -141,20 +162,48 @@ module.exports = function (app, passport) {
 
 
         // get the garden to delete
+        // getting the name of the garden based on the id
         let gardenD = req.params.id.trim();
 
+        // removing unwanted characters so only the name of the garden
+        // is in the var.
         gardenD = gardenD.replace(':', '');
 
-        console.log("***DELETING GARDEN: " + gardenD);
+        // make proper call to delete the garden using garden name
+        // finding the document associated with the user
+        userSchema.find({ $or: [{ 'local.email': req.user.local.email }, { 'google.email': req.user.google.email }] }, function (err, uSchema) {
 
-        // make proper call to delete the garden
+            // isolating the garden object that was picked by the user.
+            // we use the gardens ID to find it in the array.
+            var picked = uSchema[0].gardens.find(o => o.id === gardenD);
 
-        Garden.deleteOne({ gardenName: gardenD }, function (err, garden) {
+            // removing the garden object from the garden array for the user
+            uSchema[0].gardens.remove(picked);
 
-            if (err) {
-                req.flash('duplicateMessage', 'That garden does not exists!');
-                res.redirect('/profile');
-            }
+            // saving changes made to the document
+            uSchema[0].save(function (err) {
+                if (err) {
+                    console.log(err);
+                }
+                else {
+
+                    var arrclone;
+
+                    // cloning the array of gardens to display on the profile page.
+                    uSchema.forEach(element => {
+                        arrclone = element.gardens.slice(0);
+                    });
+
+                    // this will render the profile page and it will set the values for user
+                    // gardens, and message so that we can work with them in ejs.
+                    res.render('profile.ejs', {
+                        user: req.user,
+                        gardens: arrclone,
+                        message: req.flash('duplicatedMessage')
+                    });
+                }
+            })
+
         });
 
 
@@ -183,16 +232,6 @@ module.exports = function (app, passport) {
                 will do the same with gardens once I put it in the database.
                 garden: req.garden, or something of the sort.
             */
-        });
-    });
-
-    /*
-        creating a garden
-    */
-    app.get('/create/garden', isLoggedIn, function (req, res) {
-        res.render('gardenCreate.ejs', {
-            user: req.user // get the user out of the session and pass to create a garden
-            // under this username 
         });
     });
 
