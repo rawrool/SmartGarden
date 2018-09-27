@@ -133,8 +133,10 @@ class LoginViewController: UIViewController {
                 do {
                     //create json object from data
                     if let json = try JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? [String: Any] {
-                        guard let success = json["success"] as? Bool else { return }
-                        if success{
+                        guard let success = json["success"] else { return }
+                        print("Success Message:")
+                        print(success)
+                        if success as? Bool ?? false{
                             guard let token = json["token"] else { return }
                             let user = User(user:["user": UserDefaults.standard.object(forKey: "username") as Any, "token": token])
                             UserDefaults.standard.set(user, forKey: "user")
@@ -151,6 +153,6 @@ class LoginViewController: UIViewController {
             print("Caught error: ", error)
             return false
         }
-        return true
+        return false
     }
 }
