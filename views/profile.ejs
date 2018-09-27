@@ -67,23 +67,23 @@
                             <br>
 
                             <div class="row">
-                                <% tests.forEach(function (test) { %>
+                                <% gardens.forEach(function (garden) { %>
                                     <div class="col-sm-4">
                                         <br>
                                         <b>Garden Name: </b>
-                                        <%= test.name %>
+                                        <%= garden.name %>
                                             <br>
                                             <b>Garden Created: </b>
-                                            <%= test.created_at %>
+                                            <%= garden.created_at %>
                                                 <br>
                                                 <b>ID: </b>
-                                                <%= test.id %>
+                                                <%= garden.id %>
                                                 <br>
                                                 <br>
-                                                    <form action="/profile/:<%= test.id %>" method="get">
+                                                    <form action="/profile/:<%= garden.id %>" method="get">
                                                         <button type="submit" class="btn btn-info btn-sm pull-left">Open Garden</button>
                                                     </form>
-                                                    <form action="/profile/:<%= test.id %>" method="post">
+                                                    <form action="/profile/:<%= garden.id %>" method="post">
                                                         <button type="submit" class="btn btn-danger btn-sm pull-right" data-toggle="modal" data-target="#deleteGarden">Delete
                                                             Garden
                                                         </button>
