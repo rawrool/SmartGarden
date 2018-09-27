@@ -4,9 +4,8 @@
 var LocalStrategy = require('passport-local').Strategy;
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 
-
-// load up the user model
-var User = require('../app/models/user');
+// load up new schema for testing
+const userSchema = require('../app/models/userSchema');
 
 // load the auth variables
 var configAuth = require('./auth');
@@ -29,9 +28,10 @@ module.exports = function (passport) {
 
     // used to deserialize the user
     passport.deserializeUser(function (id, done) {
-        User.findById(id, function (err, user) {
+
+        userSchema.findById(id, function(err, user){
             done(err, user);
-        });
+        })
     });
 
     // =========================================================================
@@ -54,7 +54,7 @@ module.exports = function (passport) {
 
                 // find a user whose email is the same as the forms email
                 // we are checking to see if the user trying to login already exists
-                User.findOne({ 'local.email': email }, function (err, user) {
+                userSchema.findOne({ 'local.email': email }, function (err, user) {
                     // if there are any errors, return the error
                     if (err)
                         return done(err);
@@ -66,18 +66,28 @@ module.exports = function (passport) {
 
                         // if there is no user with that email
                         // create the user
-                        var newUser = new User();
+                        // var newUser = new User();
+                        var newtest = new userSchema();
 
                         // set the user's local credentials
-                        newUser.local.email = email;
-                        newUser.local.password = newUser.generateHash(password);
+                        // newUser.local.email = email;
+                        // newUser.local.password = newUser.generateHash(password);
 
-                        // save the user
-                        newUser.save(function (err) {
-                            if (err)
+                        newtest.local.email = email;
+                        newtest.local.password = newtest.generateHash(password);
+
+                        // // save the user
+                        // newUser.save(function (err) {
+                        //     if (err)
+                        //         throw err;
+                        //     return done(null, newUser);
+                        // });
+
+                        newtest.save(function(err){
+                            if(err)
                                 throw err;
-                            return done(null, newUser);
-                        });
+                            return done(null, newtest);
+                        })
                     }
 
                 });
@@ -102,7 +112,7 @@ module.exports = function (passport) {
 
             // find a user whose email is the same as the forms email
             // we are checking to see if the user trying to login already exists
-            User.findOne({ 'local.email': email }, function (err, user) {
+            userSchema.findOne({ 'local.email': email }, function (err, user) {
                 // if there are any errors, return the error before anything else
                 if (err)
                     return done(err);
@@ -140,7 +150,7 @@ module.exports = function (passport) {
                 // check if the user is already logged in
                 if (!req.user) {
                     // User.findOne won't fire until we have all our data back from Google.
-                    User.findOne({ 'google.id': profile.id }, function (err, user) {
+                    userSchema.findOne({ 'google.id': profile.id }, function (err, user) {
                         if (err)
                             return done(err);
 
@@ -163,7 +173,7 @@ module.exports = function (passport) {
                             return done(null, user);
                         } else {
                             // if no user was found, with that google id then create a new user.
-                            var newUser = new User();
+                            var newUser = new userSchema();
 
                             newUser.google.id = profile.id;
                             newUser.google.token = token;
@@ -198,6 +208,4 @@ module.exports = function (passport) {
             });
 
         }));
-
-
 };
