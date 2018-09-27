@@ -19,17 +19,27 @@ struct LoginResponse:Decodable{
         token = json["token"] as? String ?? ""
     }
 }
+struct User {
+    let username:String
+    let token:String
+    
+    init(user: [String: Any]){
+        username = user["username"] as? String ?? ""
+        token = user["token"] as? String ?? ""
+    }
+}
 
 class LoginViewController: UIViewController {
     @IBOutlet weak var usernameText: UITextField!
     @IBOutlet weak var passwordText: UITextField!
     @IBOutlet weak var loginButton: UIButton!
     
-    
     @IBAction func loginButtonTapped(_ sender: Any) {
        
         if (attemptLogin( username:usernameText.text!, password:passwordText.text!)){
-            print("Done with trying to login and it was successful")
+            let user = UserDefaults.standard.object(forKey: "user") as! User
+            print(user.username)
+            print(user.token)
             performSegue(withIdentifier: "loggedIn", sender: sender)
         }
         else{
@@ -43,12 +53,15 @@ class LoginViewController: UIViewController {
         loginButton.layer.cornerRadius = 10
         loginButton.clipsToBounds = true
         
-        if let username = UserDefaults.standard.object(forKey: "username"){
-            usernameText.text = username as? String
-        }
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        if let username = UserDefaults.standard.object(forKey: "username"){
+            print(username)
+        } else {
+            print("No username stored")
+        }
         //Check if the user has a token and if so move past login screen
         //need to see if token is valid
         //if let token = UserDefaults.standard.object(forKey: "token"){
@@ -121,8 +134,8 @@ class LoginViewController: UIViewController {
                     //create json object from data
                     if let json = try JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? [String: Any] {
                         guard let token = json["token"] else { return }
-                        print("Setting Token")
-                        UserDefaults.standard.set(token, forKey: "token")
+                        let user = User(user:["user": UserDefaults.standard.object(forKey: "username") as Any, "token": token])
+                        UserDefaults.standard.set(user, forKey: "user")
                     }
                 } catch let error {
                     print(error.localizedDescription)
