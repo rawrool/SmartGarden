@@ -1,8 +1,8 @@
 module.exports = function (app, passport, express) {
 
-    var User = require('./models/user');
-    var Garden = require('./models/garden');
     var Plant = require('./models/plant');
+
+    const userSchema = require('./models/userSchema');
 
     /* the Joi class is needed for input validation
 
@@ -19,7 +19,7 @@ module.exports = function (app, passport, express) {
     // ========================
     apiRoutes.post('/authenticate', function (req, res) {
         // find the user
-        User.findOne({ 'local.email': req.body.email }, function (err, user) {
+        userSchema.findOne({ 'local.email': req.body.email }, function (err, user) {
             if (err) {
                 console.log(err);
             }
@@ -51,6 +51,9 @@ module.exports = function (app, passport, express) {
                         var token = jwt.sign(payload, app.get('smartSecret'), {
                             expiresIn: "30 days" // expires n 24 hours
                         });
+
+                        // assign the token to the user schema so that the user
+                        // can only access the gardens and logs associated with the users token?
 
                         // return the information including token as JSON
                         res.json({
@@ -152,11 +155,21 @@ module.exports = function (app, passport, express) {
             else {
                 var username = req.headers['email'];
 
-                Garden.find({ 'username': username }, function (err, gardens) {
-                    if (gardens.length > 0) {
-                        res.json(gardens);
+                // finding the document that belongs to the user.
+                userSchema.find({ 'local.email': username }, function (err, uSchema) {
+
+                    var arrclone;
+
+                    // cloning the array of gardens to display on the profile page.
+                    uSchema.forEach(element => {
+                        arrclone = element.gardens.slice(0);
+                    });
+
+                    if (arrclone.length > 0) {
+                        res.json(arrclone);
                     }
                     else {
+                        // if there are no gardens we send this response to the user
                         res.json({ message: 'No Gardens!' });
                     }
                 });
@@ -164,7 +177,6 @@ module.exports = function (app, passport, express) {
         })
 
         .post(function (req, res) {
-            var garden = new Garden(); // create a new instance of the garden model.
 
             /*
                 retrieving the value of the email and the gardenName so that
@@ -190,17 +202,23 @@ module.exports = function (app, passport, express) {
                 res.status(400).send(result.error.details[0].message);
             }
             else {
-                garden.gardenName = req.body.gardenName;
-                garden.username = req.body.email;
+                userSchema.find({ 'local.email': req.body.email }, function (err, uSchema) {
 
-                // save the garden and check for errors
-                garden.save(function (err) {
-                    if (err) {
-                        res.send(err);
-                    }
-                    else {
-                        res.json({ message: 'Garden Created' });
-                    }
+                    // get the name of the garden from the headers and trim any extra white space
+                    var nameG = req.body.gardenName.trim();
+
+                    // concatenating the new garden name into the array of gardens.
+                    uSchema[0].gardens = uSchema[0].gardens.concat({ name: nameG });
+
+                    // saving the document with the changes that we have made
+                    uSchema[0].save(function (err) {
+                        if (err) {
+                            console.log(err);
+                        }
+                        else {
+                            res.json({ message: 'Garden Created!', name: nameG });
+                        }
+                    })
                 });
             }
         })
@@ -224,6 +242,20 @@ module.exports = function (app, passport, express) {
                     res.json({ message: 'No Plants!' });
                 }
             })
+
+            // retrieve values of the JSON get request
+
+
+            // validate api requests with JOI
+
+            // create schema of what is required for each method call
+
+            // validate the headers/ variables
+
+            // find all plants associated with the garden provided
+
+
+            // return the list of plants associated with the garden
         })
 
         .post(function (req, res) {
@@ -241,6 +273,21 @@ module.exports = function (app, passport, express) {
                     res.json({ message: 'Plant created successfully' });
                 }
             });
+
+            // retrieve values of the JSON get request
+
+
+            // validate api requests with JOI
+
+            // create schema of what is required for each method call
+
+            // validate the headers/ variables
+
+            // create a new plant object and set all of the values
+
+            // associate the plant with the correct garden
+
+            // insert the new plant into the plants database
         })
 
 
