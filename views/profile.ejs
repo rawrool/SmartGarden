@@ -67,20 +67,23 @@
                             <br>
 
                             <div class="row">
-                                <% gardens.forEach(function (garden) { %>
+                                <% tests.forEach(function (test) { %>
                                     <div class="col-sm-4">
                                         <br>
                                         <b>Garden Name: </b>
-                                        <%= garden.gardenName %>
+                                        <%= test.name %>
                                             <br>
                                             <b>Garden Created: </b>
-                                            <%= garden.created_at %>
+                                            <%= test.created_at %>
+                                                <br>
+                                                <b>ID: </b>
+                                                <%= test.id %>
                                                 <br>
                                                 <br>
-                                                    <form action="/profile/:<%= garden.gardenName %>" method="get">
+                                                    <form action="/profile/:<%= test.id %>" method="get">
                                                         <button type="submit" class="btn btn-info btn-sm pull-left">Open Garden</button>
                                                     </form>
-                                                    <form action="/profile/:<%= garden.gardenName %>" method="post">
+                                                    <form action="/profile/:<%= test.id %>" method="post">
                                                         <button type="submit" class="btn btn-danger btn-sm pull-right" data-toggle="modal" data-target="#deleteGarden">Delete
                                                             Garden
                                                         </button>
