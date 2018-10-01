@@ -99,7 +99,10 @@ class LoginViewController: UIViewController {
     }
     
     func attemptLogin(username:String, password:String) -> Bool{
+        print("Username: " + username)
         UserDefaults.standard.set(username, forKey: "username")
+        print("Stored Username: ")
+        print(UserDefaults.standard.object(forKey: "username") ?? "no username stored")
         let headers = [
             "content-type": "application/json"
         ]
@@ -138,7 +141,10 @@ class LoginViewController: UIViewController {
                         print(success)
                         if success as? Bool ?? false{
                             guard let token = json["token"] else { return }
-                            let user = User(user:["user": UserDefaults.standard.object(forKey: "username") as Any, "token": token])
+                            let username = UserDefaults.standard.object(forKey: "username") as Any?
+                            print("In dataTask Username: ")
+                            print(username!)
+                            let user = User(user:["username": username! , "token": token])
                             UserDefaults.standard.set(user, forKey: "user")
                         }
                     }
