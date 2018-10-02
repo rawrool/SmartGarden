@@ -19,15 +19,6 @@ struct LoginResponse:Decodable{
         token = json["token"] as? String ?? ""
     }
 }
-struct User {
-    let username:String
-    let token:String
-    
-    init(user: [String: Any]){
-        username = user["username"] as? String ?? ""
-        token = user["token"] as? String ?? ""
-    }
-}
 
 class LoginViewController: UIViewController {
     @IBOutlet weak var usernameText: UITextField!
@@ -37,15 +28,18 @@ class LoginViewController: UIViewController {
     @IBAction func loginButtonTapped(_ sender: Any) {
        
         if (attemptLogin( username:usernameText.text!, password:passwordText.text!)){
-            let user = UserDefaults.standard.object(forKey: "user") as! User
-            print(user.username)
-            print(user.token)
+            //Print the stored username and token
+            print(UserDefaults.standard.object(forKey: "username") ?? "No Username")
+            print(UserDefaults.standard.object(forKey: "token") ?? "No Token")
+            //Segue to the next screen
             performSegue(withIdentifier: "loggedIn", sender: sender)
-        }
+        }//end if
         else{
+            //display login error alert
             loginErrorAlert()
-        }
-    }
+        }//end else
+    }//end loginButtonTapped
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -53,8 +47,7 @@ class LoginViewController: UIViewController {
         loginButton.layer.cornerRadius = 10
         loginButton.clipsToBounds = true
         
-        
-    }
+    }//end viewDidLoad
     
     override func viewDidAppear(_ animated: Bool) {
         if let username = UserDefaults.standard.object(forKey: "username"){
@@ -67,7 +60,7 @@ class LoginViewController: UIViewController {
         //if let token = UserDefaults.standard.object(forKey: "token"){
             //performSegue(withIdentifier: "loggedIn", sender: self)
         //}
-    }
+    }//end viewDidAppear
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -89,24 +82,23 @@ class LoginViewController: UIViewController {
     }
     */
     
-    
+    //Displays an alert to the user that the login failed
     func loginErrorAlert() {
         let alertController = UIAlertController(title: "Login Error", message:
             "Unable to login with that username/password.", preferredStyle: UIAlertControllerStyle.alert)
         alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default,handler: nil))
         
         self.present(alertController, animated: true, completion: nil)
-    }
+    }//end loginErrorAlert
     
     func attemptLogin(username:String, password:String) -> Bool{
-        print("Username: " + username)
+        //store the username
         UserDefaults.standard.set(username, forKey: "username")
-        print("Stored Username: ")
-        print(UserDefaults.standard.object(forKey: "username") ?? "no username stored")
+        //set the header for the http request
         let headers = [
             "content-type": "application/json"
         ]
-        
+        //set the parameters for the http request
         let parameters = [
             "email": "test@gmail.com",//username as Any,
             "password": "test1234"//password as Any
@@ -144,8 +136,9 @@ class LoginViewController: UIViewController {
                             let username = UserDefaults.standard.object(forKey: "username") as Any?
                             print("In dataTask Username: ")
                             print(username!)
-                            let user = User(user:["username": username! , "token": token])
-                            UserDefaults.standard.set(user, forKey: "user")
+                            print(token)
+                            //possibly switch to using the username as the key for the stored token
+                            UserDefaults.standard.set(token, forKey: "token")
                         }
                     }
                 } catch let error {
@@ -159,6 +152,6 @@ class LoginViewController: UIViewController {
             print("Caught error: ", error)
             return false
         }
-        return false
+        return true
     }
 }
