@@ -129,14 +129,14 @@ class LoginViewController: UIViewController {
                     //create json object from data
                     if let json = try JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? [String: Any] {
                         guard let success = json["success"] else { return }
-                        print("Success Message:")
-                        print(success)
+                        //print("Success Message:")
+                        //print(success)
                         if success as? Bool ?? false{
                             guard let token = json["token"] else { return }
                             let username = UserDefaults.standard.object(forKey: "username") as Any?
-                            print("In dataTask Username: ")
-                            print(username!)
-                            print(token)
+                            //print("In dataTask Username: ")
+                            //print(username!)
+                            //print(token)
                             //possibly switch to using the username as the key for the stored token
                             UserDefaults.standard.set(token, forKey: "token")
                         }

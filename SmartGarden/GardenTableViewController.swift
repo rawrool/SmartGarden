@@ -51,23 +51,20 @@ class GardenTableViewController: UITableViewController {
         
         //set the header for the http request
         let headers = [
-            "content-type": "application/json"
+            "content-type": "application/json",
+            "email": UserDefaults.standard.object(forKey: "username") as? String ?? "No Username",
+            "x-access-token": UserDefaults.standard.object(forKey: "token") as? String ?? "No Token"
         ]
-        //set the parameters for the http request
-        let parameters = [
-            "email": UserDefaults.standard.object(forKey: "username") ?? "No Username",
-            "token": UserDefaults.standard.object(forKey: "token") ?? "No Token"
-            ] as [String : Any]
         
         do{
-            let postData = try JSONSerialization.data(withJSONObject: parameters, options: [])
+            //let postData = try JSONSerialization.data(withJSONObject: parameters, options: [])
             let request = NSMutableURLRequest(url: NSURL(string: "http://ec2-18-191-18-131.us-east-2.compute.amazonaws.com/api/gardens")! as URL,
                                               cachePolicy: .useProtocolCachePolicy,
                                               timeoutInterval: 10.0)
             
             request.httpMethod = "GET"
             request.allHTTPHeaderFields = headers
-            request.httpBody = postData as Data
+            //request.httpBody = postData as Data
             
             let session = URLSession.shared
             
@@ -83,27 +80,16 @@ class GardenTableViewController: UITableViewController {
                 }
                 
                 do {
-                    print("Data from get request")
-                    print(data)
+                    //print("Data from get request")
+                    //print(data)
                     print("Response from get request")
                     print(response as Any)
                     print("Error from get request")
                     print(error as Any)
                     //create json object from data
-                    /*if let json = try JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? [String: Any] {
-                        guard let success = json["success"] else { return }
-                        print("Success Message:")
-                        print(success)
-                        if success as? Bool ?? false{
-                            guard let token = json["token"] else { return }
-                            let username = UserDefaults.standard.object(forKey: "username") as Any?
-                            print("In dataTask Username: ")
-                            print(username!)
-                            print(token)
-                            //possibly switch to using the username as the key for the stored token
-                            UserDefaults.standard.set(token, forKey: "token")
-                        }
-                    }*/
+                    if let json = try JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? [String: Any] {
+                        print(json)
+                    }
                 } catch let error {
                     print(error.localizedDescription)
                 }
