@@ -10,16 +10,24 @@ import UIKit
 
 class GardenTableViewController: UITableViewController {
     //sample garden names
-    var gardens = ["Cabbage", "Carrots", "Basil", "Tomatoes"]
+    var gardens = [["name": "A", "_id": "3asdfasdfg"], ["name": "B", "_id": "3asdgasdfg"]]
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        getGardens()
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        gardens.removeAll()
+        getGardens()
+        //FIND A WAY TO WAIT FOR THE HTTP REQUEST TO FINISH BEFORE SHOWING SCREEN, OR REFRESHING TABLE AFTER THE REQUEST FINISHES
+        sleep(1)
+        print("Got Gardens")
     }
 
     override func didReceiveMemoryWarning() {
@@ -42,8 +50,8 @@ class GardenTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "gardenCell", for: indexPath) as! GardenCell
 
-        cell.gardenNameLabel.text = gardens[indexPath.row]
-
+        cell.gardenNameLabel.text = gardens[indexPath.row]["name"]
+        print(gardens[indexPath.row]["name"] as Any)
         return cell
     }
     
@@ -80,16 +88,17 @@ class GardenTableViewController: UITableViewController {
                 }
                 
                 do {
-                    //print("Data from get request")
-                    //print(data)
-                    print("Response from get request")
-                    print(response as Any)
-                    print("Error from get request")
-                    print(error as Any)
                     //create json object from data
-                    if let json = try JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? [String: Any] {
+                    if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [[String: Any]] {
+                        print("Json Object Returned: ")
                         print(json)
-                    }
+                        for var x in json {
+                            x.removeValue( forKey: "plants")
+                            self.gardens.append(x as? [String : String] ?? ["Fail":"Fail"])
+                        }
+                        
+                        print(self.gardens)
+                    } else { print("Could not serialize the data into json")}
                 } catch let error {
                     print(error.localizedDescription)
                 }
