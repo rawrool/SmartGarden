@@ -232,16 +232,17 @@ module.exports = function (app, passport, express) {
     apiRoutes.route('/plants')
 
         .get(function (req, res) {
-            var username = req.headers['email'];
+            var email = req.headers['email'];
+            var garden = req.headers['garden'];
 
-            Plant.find({ 'username': username }, function (err, plants) {
-                if (plants.length > 0) {
-                    res.json(plants);
-                }
-                else {
-                    res.json({ message: 'No Plants!' });
-                }
-            })
+            const header_create = {
+                gardenName: garden, email: email
+            };
+
+            const schema = {
+                gardenName: Joi.string().min(4).required(),
+                email: Joi.string().email({ minDomainAtoms: 2 }).required()
+            };
 
             // retrieve values of the JSON get request
 
@@ -251,43 +252,103 @@ module.exports = function (app, passport, express) {
             // create schema of what is required for each method call
 
             // validate the headers/ variables
-
+            const result = Joi.validate(header_create, schema);
             // find all plants associated with the garden provided
 
 
-            // return the list of plants associated with the garden
+            // find plants associated with gardens
+            if (result.error) {
+                // 400 bad request if the information provided does not
+                // match the schema
+                res.status(400).send(result.error.details[0].message);
+            }
+            else {
+                userSchema.findOne({ 'local.email': email }, function (err, uSchema) {
+
+                    var arrclone;
+
+                    // cloning the array of gardens to display on the profile page.
+
+                    arrclone = uSchema.gardens.slice(0);
+
+                    var resG = arrclone.find(function(element){
+                        return element.name === garden;
+                    });
+
+                    if(resG !== undefined){
+                        res.json(resG.plants);
+                    }
+                    else{
+                        res.json("no such garden exists");
+                    }
+
+
+                });
+
+            }
         })
 
         .post(function (req, res) {
-            var plant = new Plant();
-
-            plant.gardenName = req.body.gardenName;
-            plant.username = req.body.email;
-            plant.plantName = req.body.plantName;
-
-            plant.save(function (err) {
-                if (err) {
-                    res.send(err);
-                }
-                else {
-                    res.json({ message: 'Plant created successfully' });
-                }
-            });
 
             // retrieve values of the JSON get request
-
+            let gName = req.body.gardenName.trim();
+            let email = req.body.email.trim();
+            let pName = req.body.plantName.trim();
 
             // validate api requests with JOI
 
+            /*
+                retrieving the value of the email and the gardenName so that
+                we can validate the data.
+            */
+            const header_create = {
+                gardenName: gName, username: email, plantName: pName
+            };
+
             // create schema of what is required for each method call
+            const schema = {
+                gardenName: Joi.string().min(4).required(),
+                plantName: Joi.string().min(4).required(),
+                username: Joi.string().email({ minDomainAtoms: 2 }).required()
+            };
 
             // validate the headers/ variables
+            const result = Joi.validate(header_create, schema);
 
-            // create a new plant object and set all of the values
-
-            // associate the plant with the correct garden
 
             // insert the new plant into the plants database
+            if (result.error) {
+                // 400 bad request if the information provided does not
+                // match the schema
+                res.status(400).send(result.error.details[0].message);
+            }
+            else {
+                userSchema.findOne({ 'local.email': req.body.email }, function (err, uSchema) {
+
+                    var arrclone;
+
+                    // cloning the array of gardens to display on the profile page.
+
+                    arrclone = uSchema.gardens.slice(0);
+
+                    var resG = arrclone.find(function (element) {
+                        return element.name === gName;
+                    });
+
+                    resG.plants = resG.plants.concat({ name: pName });
+
+                    uSchema.save(function (err) {
+                        if (err) {
+                            console.log(err);
+                        }
+                        else {
+                            res.json({ message: 'Plant Created!'});
+                        }
+                    });
+
+                });
+
+            }
         })
 
 
@@ -295,7 +356,15 @@ module.exports = function (app, passport, express) {
     // ========================
     // LOGS INFO ==============
     // ========================
+    apiRoutes.route('/logs')
 
+        .get(function (req, res) {
+
+        })
+
+        .post(function (req, res) {
+
+        })
 
     // for the route apiRoutes, we will be starting the routing with /api/*
     app.use('/api', apiRoutes);
