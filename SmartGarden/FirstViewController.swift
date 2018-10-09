@@ -35,6 +35,7 @@ class FirstViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        gardenName = UserDefaults.standard.object(forKey: "garden") as? String ?? "Error"
         gardenTitleLabel.text = gardenName
     }
     

@@ -37,16 +37,8 @@ class GardenTableViewController: UITableViewController {
     
     // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        print("Preparing for segue after garden select")
-        print(segue.identifier as Any)
-        if  segue.identifier == "gardenSelected" {
-            if let destination = segue.destination as? FirstViewController {
-            let gardenIndex = tableView.indexPathForSelectedRow?.row
-            print("Setting the gardenName in the next view controller:")
-            print(gardens[gardenIndex ?? 0]["name"] ?? "Error no garden names")
-            destination.gardenName = gardens[gardenIndex!]["name"] ?? "Error no garden names"
-            }
-        }
+        let gardenIndex = tableView.indexPathForSelectedRow?.row
+        UserDefaults.standard.set(gardens[gardenIndex ?? 0]["name"], forKey: "garden")
     }
 
     // MARK: - Table view data source
