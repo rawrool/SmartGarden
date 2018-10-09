@@ -34,6 +34,20 @@ class GardenTableViewController: UITableViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    // MARK: - Navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        print("Preparing for segue after garden select")
+        print(segue.identifier as Any)
+        if  segue.identifier == "gardenSelected" {
+            if let destination = segue.destination as? FirstViewController {
+            let gardenIndex = tableView.indexPathForSelectedRow?.row
+            print("Setting the gardenName in the next view controller:")
+            print(gardens[gardenIndex ?? 0]["name"] ?? "Error no garden names")
+            destination.gardenName = gardens[gardenIndex!]["name"] ?? "Error no garden names"
+            }
+        }
+    }
 
     // MARK: - Table view data source
 

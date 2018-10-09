@@ -10,6 +10,7 @@ import UIKit
 
 //  This view controller is for the Garden Scene
 class FirstViewController: UIViewController {
+    var gardenName = String()
     //variable to manipulate the garden title label
     @IBOutlet weak var gardenTitleLabel: UILabel!
     
@@ -31,6 +32,10 @@ class FirstViewController: UIViewController {
         //Next two lines rounds out the button to look more appealing
         detailsButton.layer.cornerRadius = 10
         detailsButton.clipsToBounds = true
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        gardenTitleLabel.text = gardenName
     }
     
     @IBAction func unwindSegue(_ sender : UIStoryboard){
