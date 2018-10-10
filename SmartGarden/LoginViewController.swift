@@ -27,13 +27,14 @@ class LoginViewController: UIViewController {
     
     @IBAction func loginButtonTapped(_ sender: Any) {
        
-        if (attemptLogin( username:usernameText.text!, password:passwordText.text!)){
+        attemptLogin( username:usernameText.text!, password:passwordText.text!)
+        if((UserDefaults.standard.object(forKey: "loginStatus")) != nil){
             //Print the stored username and token
             print(UserDefaults.standard.object(forKey: "username") ?? "No Username")
             print(UserDefaults.standard.object(forKey: "token") ?? "No Token")
             //Segue to the next screen
             performSegue(withIdentifier: "loggedIn", sender: sender)
-        }//end if
+        }
         else{
             //display login error alert
             loginErrorAlert()
@@ -91,7 +92,7 @@ class LoginViewController: UIViewController {
         self.present(alertController, animated: true, completion: nil)
     }//end loginErrorAlert
     
-    func attemptLogin(username:String, password:String) -> Bool{
+    func attemptLogin(username:String, password:String){
         //store the username
         UserDefaults.standard.set(username, forKey: "username")
         //set the header for the http request
@@ -100,8 +101,8 @@ class LoginViewController: UIViewController {
         ]
         //set the parameters for the http request
         let parameters = [
-            "email": "test@gmail.com",//username as Any,
-            "password": "test1234"//password as Any
+            "email": username as Any, //"test@gmail.com"
+            "password": password as Any //"test1234"
             ] as [String : Any]
         
         do{
@@ -129,14 +130,17 @@ class LoginViewController: UIViewController {
                     //create json object from data
                     if let json = try JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? [String: Any] {
                         guard let success = json["success"] else { return }
-                        //print("Success Message:")
-                        //print(success)
+                        print("Success Message:")
+                        print(success)
+                        
+                        if(success as? Bool ?? false){
+                            UserDefaults.standard.set(true, forKey: "loginStatus")
+                        } else { UserDefaults.standard.set(false, forKey: "loginStatus")}
+                        
                         if success as? Bool ?? false{
                             guard let token = json["token"] else { return }
                             let username = UserDefaults.standard.object(forKey: "username") as Any?
-                            //print("In dataTask Username: ")
-                            //print(username!)
-                            //print(token)
+                            
                             //possibly switch to using the username as the key for the stored token
                             UserDefaults.standard.set(token, forKey: "token")
                         }
@@ -150,8 +154,8 @@ class LoginViewController: UIViewController {
         }
         catch{
             print("Caught error: ", error)
-            return false
+            return
         }
-        return true
+        return
     }
 }
