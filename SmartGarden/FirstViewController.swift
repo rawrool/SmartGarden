@@ -26,6 +26,9 @@ class FirstViewController: UIViewController {
     //variable linked to the "Garden Details"
     @IBOutlet weak var detailsButton: UIButton!
     
+    //Navigation bar with the title and done button
+    @IBOutlet weak var titleBar: UINavigationItem!
+    
     //Look up SwiftyGif or something to display a GIF File
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,8 +40,12 @@ class FirstViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         gardenName = UserDefaults.standard.object(forKey: "garden") as? String ?? "Error"
         gardenTitleLabel.text = gardenName
+        titleBar.title = gardenName
     }
     
+    @IBAction func donePressed(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
+    }
     @IBAction func unwindSegue(_ sender : UIStoryboard){
         
     }
