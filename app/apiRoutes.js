@@ -1,7 +1,5 @@
 module.exports = function (app, passport, express) {
 
-    var Plant = require('./models/plant');
-
     const userSchema = require('./models/userSchema');
 
     /* the Joi class is needed for input validation
