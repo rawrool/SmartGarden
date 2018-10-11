@@ -822,6 +822,11 @@
                                             <action selector="logOut:" destination="xuC-oN-9nS" id="vtc-F0-iZ6"/>
                                         </connections>
                                     </barButtonItem>
+                                    <barButtonItem key="rightBarButtonItem" systemItem="add" id="zKf-Ci-8EW">
+                                        <connections>
+                                            <segue destination="Pli-7p-DJg" kind="show" id="kWo-FG-376"/>
+                                        </connections>
+                                    </barButtonItem>
                                 </navigationItem>
                             </items>
                         </navigationBar>
@@ -857,6 +862,62 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LqP-ca-Jws" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1215.2" y="177.66116941529236"/>
+        </scene>
+        <!--New Garden View Controller-->
+        <scene sceneID="eKp-fh-U9r">
+            <objects>
+                <viewController id="Pli-7p-DJg" customClass="NewGardenViewController" customModule="SmartGarden" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="VR0-TI-gzb">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" alpha="0.5" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="japaneseGardens" translatesAutoresizingMaskIntoConstraints="NO" id="76X-0B-0wI">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="669"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SFq-9Z-MxH">
+                                <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <items>
+                                    <navigationItem title="Add Garden" id="hJz-G4-4GS">
+                                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="7eI-Da-z7d">
+                                            <connections>
+                                                <action selector="cancelCreation:" destination="Pli-7p-DJg" id="zfL-2u-Rd2"/>
+                                            </connections>
+                                        </barButtonItem>
+                                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="qiW-ny-dSR">
+                                            <connections>
+                                                <action selector="createGarden:" destination="Pli-7p-DJg" id="TmN-pY-2pc"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Garden Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="wbf-h4-Cke">
+                                <rect key="frame" x="102" y="319" width="170" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Enter the new garden name:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nPz-bA-GuB">
+                                <rect key="frame" x="66" y="267" width="243" height="24"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="cQW-R5-Ddg"/>
+                    </view>
+                    <connections>
+                        <outlet property="gardenName" destination="wbf-h4-Cke" id="HYA-rs-pGz"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5iZ-A7-WJx" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1215.2" y="1009.7451274362819"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="yl2-sM-qoP">
