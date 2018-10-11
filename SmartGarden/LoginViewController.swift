@@ -28,10 +28,15 @@ class LoginViewController: UIViewController {
     @IBAction func loginButtonTapped(_ sender: Any) {
        
         attemptLogin( username:usernameText.text!, password:passwordText.text!)
-        if((UserDefaults.standard.object(forKey: "loginStatus")) != nil){
+        sleep(1)
+        let loggedIn = (UserDefaults.standard.object(forKey: "loginStatus")) as? Bool ?? false
+        if(loggedIn){
             //Print the stored username and token
             print(UserDefaults.standard.object(forKey: "username") ?? "No Username")
             print(UserDefaults.standard.object(forKey: "token") ?? "No Token")
+            //Clear textfields
+            usernameText.text = ""
+            passwordText.text = ""
             //Segue to the next screen
             performSegue(withIdentifier: "loggedIn", sender: sender)
         }

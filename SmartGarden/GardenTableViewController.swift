@@ -40,7 +40,13 @@ class GardenTableViewController: UITableViewController {
         let gardenIndex = tableView.indexPathForSelectedRow?.row
         UserDefaults.standard.set(gardens[gardenIndex ?? 0]["name"], forKey: "garden")
     }
-
+    @IBAction func logOut(_ sender: Any) {
+        UserDefaults.standard.set("", forKey: "username")
+        UserDefaults.standard.set("", forKey: "token")
+        UserDefaults.standard.set(false, forKey: "loginStatus")
+        dismiss(animated: true, completion: nil)
+    }
+    
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
