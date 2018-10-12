@@ -3,18 +3,22 @@ module.exports = function (app, passport, express) {
     const userSchema = require('./models/userSchema');
 
     /* the Joi class is needed for input validation
-
     */
     const Joi = require('joi');
 
     // get an instance of the router for api routes
     var apiRoutes = express.Router();
 
+    // need json web token to authenticate users
     var jwt = require('jsonwebtoken');
 
-    // ========================
-    // AUTHENTICATE USER ======
-    // ========================
+    // will set this username variable when validating the token so that
+    // we get the correct user from the database that the token was given to.
+    var user_email;
+
+    // =========================================================================================
+    // AUTHENTICATE USER =======================================================================
+    // =========================================================================================
     apiRoutes.post('/authenticate', function (req, res) {
         // find the user
         userSchema.findOne({ 'local.email': req.body.email }, function (err, user) {
@@ -46,12 +50,21 @@ module.exports = function (app, passport, express) {
                             email: user.local.email
                         };
 
+                        // creating a token for the users one we verified the password
                         var token = jwt.sign(payload, app.get('smartSecret'), {
                             expiresIn: "30 days" // expires n 24 hours
                         });
 
-                        // assign the token to the user schema so that the user
-                        // can only access the gardens and logs associated with the users token?
+                        // save the token for the user so that it's the only 
+                        // thing being passed in when making requests
+                        user.local.token = token;
+
+                        // updating the users token
+                        user.save(function (err) {
+                            if (err) {
+                                console.log(err);
+                            }
+                        });
 
                         // return the information including token as JSON
                         res.json({
@@ -67,9 +80,9 @@ module.exports = function (app, passport, express) {
 
 
 
-    // =====================================================
-    // MIDDLEWARE FOR OUR TOKEN ============================
-    // =====================================================
+    // ============================================================================================
+    // MIDDLEWARE FOR OUR TOKEN ===================================================================
+    // ============================================================================================
     // route middleware to verify a token
     apiRoutes.use(function (req, res, next) {
 
@@ -90,7 +103,34 @@ module.exports = function (app, passport, express) {
                 else {
                     // if everything is good, save to request for use in other routes
                     req.decoded = decoded;
-                    next();
+
+                    // set the user to the token provided
+                    userSchema.findOne({ "local.token": token }, function (err, user) {
+
+                        if (err) {
+                            console.log(err);
+                        }
+                        else {
+                            // the token must be valid, but it is no longer assigned to the user,
+                            // therefore it must be an invalid token and cannot be used.
+                            if (user === null) {
+                                return res.json({
+                                    success: false,
+                                    message: 'Token provided is expired!'
+                                });
+                            }
+                            else {
+
+                                // setting the global user variable so that the user won't send
+                                // in another username
+                                user_email = user.local.email;
+
+                                // after the user_email is set, it will allow the other
+                                // routes to execute
+                                next();
+                            }
+                        }
+                    });
                 }
             });
         }
@@ -105,73 +145,45 @@ module.exports = function (app, passport, express) {
         }
     });
 
-    // ========================
-    // BASIC API ROUTE ========
-    // ========================
+    // ======================================================================================================
+    // BASIC API ROUTE ======================================================================================
+    // ======================================================================================================
 
 
-    // ========================
-    // USER INFO ==============
-    // ========================
+    // =========================================================================================
+    // USER INFO ===============================================================================
+    // =========================================================================================
 
     apiRoutes.get('/', function (req, res) {
         res.json({ message: 'Welcome to the smart garden api' });
     });
 
-    // ========================
-    // GARDEN INFO ============
-    // ========================
+    // =========================================================================================
+    // GARDEN INFO =============================================================================
+    // =========================================================================================
 
     // this will get all the gardens associated with the email
     apiRoutes.route('/gardens')
 
         .get(function (req, res) {
 
-            /*
-                retrieving the value of email in the header so that we can validate it
-            */
-            const header_email = { email: req.headers['email'] };
+            // finding the document that belongs to the user.
+            userSchema.findOne({ 'local.email': user_email }, function (err, uSchema) {
 
-            /*
-                schema for the properties that we will need to validate.
-            */
-            const schema = {
-                email: Joi.string().email({ minDomainAtoms: 2 }).required()
-            };
-
-
-            // we call the validate function and give it the value of 
-            // the email along with the properties to check
-            const result = Joi.validate(header_email, schema);
-
-
-            // if it results in an error, we let the user know why they go an error.
-            if (result.error) {
-                //400 bad request
-                res.status(400).send(result.error.details[0].message);
-            }
-            else {
-                var username = req.headers['email'];
-
-                // finding the document that belongs to the user.
-                userSchema.find({ 'local.email': username }, function (err, uSchema) {
-
-                    var arrclone;
-
-                    // cloning the array of gardens to display on the profile page.
-                    uSchema.forEach(element => {
-                        arrclone = element.gardens.slice(0);
-                    });
-
-                    if (arrclone.length > 0) {
-                        res.json(arrclone);
+                // if the results gives an error we print it out.
+                if (err) {
+                    console.log(err);
+                }
+                else {
+                    if (uSchema.gardens.length > 0) {
+                        res.json(uSchema.gardens);
                     }
                     else {
                         // if there are no gardens we send this response to the user
                         res.json({ message: 'No Gardens!' });
                     }
-                });
-            }
+                }
+            });
         })
 
         .post(function (req, res) {
@@ -180,14 +192,13 @@ module.exports = function (app, passport, express) {
                 retrieving the value of the email and the gardenName so that
                 we can validate the data.
             */
-            const header_create = { gardenName: req.body.gardenName, username: req.body.email }
+            const header_create = { gardenName: req.body.gardenName }
 
             /*
                 schema for the properties that we will need to validate
             */
             const schema = {
-                gardenName: Joi.string().min(4).required(),
-                username: Joi.string().email({ minDomainAtoms: 2 }).required()
+                gardenName: Joi.string().min(4).required()
             };
 
             // we call the validate function and give it the value of
@@ -200,16 +211,16 @@ module.exports = function (app, passport, express) {
                 res.status(400).send(result.error.details[0].message);
             }
             else {
-                userSchema.find({ 'local.email': req.body.email }, function (err, uSchema) {
+                userSchema.findOne({ 'local.email': user_email }, function (err, uSchema) {
 
                     // get the name of the garden from the headers and trim any extra white space
                     var nameG = req.body.gardenName.trim();
 
                     // concatenating the new garden name into the array of gardens.
-                    uSchema[0].gardens = uSchema[0].gardens.concat({ name: nameG });
+                    uSchema.gardens = uSchema.gardens.concat({ name: nameG });
 
                     // saving the document with the changes that we have made
-                    uSchema[0].save(function (err) {
+                    uSchema.save(function (err) {
                         if (err) {
                             console.log(err);
                         }
@@ -223,36 +234,30 @@ module.exports = function (app, passport, express) {
 
 
 
-    // ========================
-    // PLANT INFO =============
-    // ========================
+    // =========================================================================================
+    // PLANT INFO ==============================================================================
+    // =========================================================================================
 
     apiRoutes.route('/plants')
 
         .get(function (req, res) {
-            var email = req.headers['email'];
+
+
+            // retrieve values of the JSON get request
             var garden = req.headers['garden'];
 
             const header_create = {
-                gardenName: garden, email: email
+                gardenName: garden
             };
-
-            const schema = {
-                gardenName: Joi.string().min(4).required(),
-                email: Joi.string().email({ minDomainAtoms: 2 }).required()
-            };
-
-            // retrieve values of the JSON get request
-
 
             // validate api requests with JOI
-
             // create schema of what is required for each method call
+            const schema = {
+                gardenName: Joi.string().min(4).required()
+            };
 
             // validate the headers/ variables
             const result = Joi.validate(header_create, schema);
-            // find all plants associated with the garden provided
-
 
             // find plants associated with gardens
             if (result.error) {
@@ -261,25 +266,29 @@ module.exports = function (app, passport, express) {
                 res.status(400).send(result.error.details[0].message);
             }
             else {
-                userSchema.findOne({ 'local.email': email }, function (err, uSchema) {
+                userSchema.findOne({ 'local.email': user_email }, function (err, uSchema) {
 
-                    var arrclone;
-
-                    // cloning the array of gardens to display on the profile page.
-
-                    arrclone = uSchema.gardens.slice(0);
-
-                    var resG = arrclone.find(function(element){
+                    // singling out the garden that the user provided from the gardens
+                    // that the user owns
+                    var resG = uSchema.gardens.find(function (element) {
                         return element.name === garden;
                     });
 
-                    if(resG !== undefined){
-                        res.json(resG.plants);
-                    }
-                    else{
-                        res.json("no such garden exists");
-                    }
+                    // if the garden exists then we check if there are any plants in the garden
+                    if (resG !== undefined) {
 
+                        // if there are no plants, then we notify the user.
+                        // else we return the plants in the garden
+                        if (resG.plants.length < 1) {
+                            res.json("There are no plants in this garden!");
+                        }
+                        else {
+                            res.json(resG.plants);
+                        }
+                    }
+                    else {
+                        res.json("No such garden exists!");
+                    }
 
                 });
 
@@ -290,7 +299,6 @@ module.exports = function (app, passport, express) {
 
             // retrieve values of the JSON get request
             let gName = req.body.gardenName.trim();
-            let email = req.body.email.trim();
             let pName = req.body.plantName.trim();
 
             // validate api requests with JOI
@@ -300,14 +308,13 @@ module.exports = function (app, passport, express) {
                 we can validate the data.
             */
             const header_create = {
-                gardenName: gName, username: email, plantName: pName
+                gardenName: gName, plantName: pName
             };
 
             // create schema of what is required for each method call
             const schema = {
                 gardenName: Joi.string().min(4).required(),
-                plantName: Joi.string().min(4).required(),
-                username: Joi.string().email({ minDomainAtoms: 2 }).required()
+                plantName: Joi.string().min(4).required()
             };
 
             // validate the headers/ variables
@@ -321,28 +328,33 @@ module.exports = function (app, passport, express) {
                 res.status(400).send(result.error.details[0].message);
             }
             else {
-                userSchema.findOne({ 'local.email': req.body.email }, function (err, uSchema) {
+                userSchema.findOne({ 'local.email': user_email }, function (err, uSchema) {
 
-                    var arrclone;
-
-                    // cloning the array of gardens to display on the profile page.
-
-                    arrclone = uSchema.gardens.slice(0);
-
-                    var resG = arrclone.find(function (element) {
+                    // singling out the garden with the name that the user provided
+                    // from the gardens that the user owns
+                    var resG = uSchema.gardens.find(function (element) {
                         return element.name === gName;
                     });
 
-                    resG.plants = resG.plants.concat({ name: pName });
+                    // checking if the garden exists, if it does then we create the new plant
+                    if (resG !== undefined) {
+                        // adding the new plant that the user wants to create.
+                        resG.plants = resG.plants.concat({ name: pName });
 
-                    uSchema.save(function (err) {
-                        if (err) {
-                            console.log(err);
-                        }
-                        else {
-                            res.json({ message: 'Plant Created!'});
-                        }
-                    });
+                        // saving the changes to the database for the users garden.
+                        uSchema.save(function (err) {
+                            if (err) {
+                                console.log(err);
+                            }
+                            else {
+                                res.json({ message: 'Plant Created!' });
+                            }
+                        });
+                    }
+                    else {
+                        // no gardens exist.
+                        res.json("No such garden exists!");
+                    }
 
                 });
 
@@ -351,9 +363,9 @@ module.exports = function (app, passport, express) {
 
 
 
-    // ========================
-    // LOGS INFO ==============
-    // ========================
+    // =========================================================================================
+    // LOGS INFO ===============================================================================
+    // =========================================================================================
     apiRoutes.route('/logs')
 
         .get(function (req, res) {
