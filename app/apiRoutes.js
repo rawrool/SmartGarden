@@ -244,7 +244,7 @@ module.exports = function (app, passport, express) {
 
 
             // retrieve values of the JSON get request
-            var garden = req.headers['garden'];
+            var garden = req.headers['gardenName'];
 
             const header_create = {
                 gardenName: garden
