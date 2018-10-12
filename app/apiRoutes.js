@@ -189,20 +189,20 @@ module.exports = function (app, passport, express) {
         .post(function (req, res) {
 
             /*
-                retrieving the value of the email and the gardenName so that
+                retrieving the value of the email and the garden so that
                 we can validate the data.
             */
-            const header_create = { gardenName: req.body.gardenName }
+            const header_create = { garden: req.body.garden }
 
             /*
                 schema for the properties that we will need to validate
             */
             const schema = {
-                gardenName: Joi.string().min(4).required()
+                garden: Joi.string().min(4).required()
             };
 
             // we call the validate function and give it the value of
-            // the email/username and the gardenName
+            // the email/username and the garden
             const result = Joi.validate(header_create, schema);
 
             if (result.error) {
@@ -214,7 +214,7 @@ module.exports = function (app, passport, express) {
                 userSchema.findOne({ 'local.email': user_email }, function (err, uSchema) {
 
                     // get the name of the garden from the headers and trim any extra white space
-                    var nameG = req.body.gardenName.trim();
+                    var nameG = req.body.garden.trim();
 
                     // concatenating the new garden name into the array of gardens.
                     uSchema.gardens = uSchema.gardens.concat({ name: nameG });
@@ -244,16 +244,16 @@ module.exports = function (app, passport, express) {
 
 
             // retrieve values of the JSON get request
-            var garden = req.headers['gardenName'];
+            var garden = req.headers["garden"];
 
             const header_create = {
-                gardenName: garden
+                garden: garden
             };
 
             // validate api requests with JOI
             // create schema of what is required for each method call
             const schema = {
-                gardenName: Joi.string().min(4).required()
+                garden: Joi.string().min(4).required()
             };
 
             // validate the headers/ variables
@@ -298,22 +298,22 @@ module.exports = function (app, passport, express) {
         .post(function (req, res) {
 
             // retrieve values of the JSON get request
-            let gName = req.body.gardenName.trim();
+            let gName = req.body.garden.trim();
             let pName = req.body.plantName.trim();
 
             // validate api requests with JOI
 
             /*
-                retrieving the value of the email and the gardenName so that
+                retrieving the value of the email and the garden so that
                 we can validate the data.
             */
             const header_create = {
-                gardenName: gName, plantName: pName
+                garden: gName, plantName: pName
             };
 
             // create schema of what is required for each method call
             const schema = {
-                gardenName: Joi.string().min(4).required(),
+                garden: Joi.string().min(4).required(),
                 plantName: Joi.string().min(4).required()
             };
 
