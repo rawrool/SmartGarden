@@ -15,12 +15,15 @@ let mongoose = require('mongoose');
 let bcrypt = require('bcrypt-nodejs');
 
 let Logs = {
-    created_at: Date,
+    created_at: {
+        date: Date,
+        time: Number,
+        offset: Number
+    },
     waterUsed: String,
     moisture: Number,
     humidity: Number,
-    temperature: Number,
-    updated_at: Date
+    temperature: Number
 }
 
 let Plants = {
