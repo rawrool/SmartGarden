@@ -370,13 +370,200 @@ module.exports = function (app, passport, express) {
 
         .get(function (req, res) {
 
+            // get the garden that the user wants to get the plant from
+            var gardenID = req.headers['garden_id'];
+            // get the plant that the user wants to view the logs of
+            var plantID = req.headers['plant_id'];
+
+            // create schema for the properties that we will validate
+            // these are the values that will be required
+            const schema = {
+                garden: Joi.string().min(4).required(),
+                plant: Joi.string().min(4).required()
+            };
+
+            // get values and put it into a schema to be validated
+            // these are the values that we are given
+            const header_create = {
+                garden: gardenID,
+                plant: plantID
+            };
+
+            // we validate the information provided
+            const { error } = Joi.validate(header_create, schema);
+
+            // we get the results
+            if (error) {
+                // 400 bad request if the information provided does not 
+                // match the schema
+                res.status(400).send(error.details[0].message);
+            }
+            else {
+                // retrieve information for the current user
+                userSchema.findOne({ 'local.email': user_email }, function (err, uSchema) {
+
+                    // single out the garden that the user provided
+                    var resG = uSchema.gardens.find(function (element) {
+                        return element._id.toString() === gardenID.toString();
+                    });
+
+                    // if the garden exists then we check if there are any plants in the garden
+                    if (resG !== undefined) {
+                        // if there are no plants, then we notify the user
+                        // else we get the plant that the user needs
+                        if (resG.plants.length < 1) {
+                            res.status(400).json("There are no plants in this garden!");
+                        }
+                        else {
+
+                            // single out the plant that the user wants the logs from.
+                            var plantR = resG.plants.find(function (element) {
+                                return element._id.toString() === plantID.toString();
+                            });
+
+                            // check if there are any logs for the plant
+                            if (plantR.logs.length < 1) {
+                                res.status(400).json("No logs for the current plant yet!");
+                            }
+                            else {
+                                // return all the logs of the plant provided
+                                res.json(plantR.logs);
+                            }
+
+                        }
+                    }
+                    else {
+                        res.status(400).json("No such garden exists!");
+                    }
+                });
+            }
         })
 
         .post(function (req, res) {
+            // get the garden that the user wants to get the plant from
+            var gardenID = req.body.garden_id.trim();
+            // get the plant that the user wants to view the logs of
+            var plantID = req.body.plant_id.trim();
 
+            // required log inputs for the plant
+            var lWater_Used = req.body.waterUsed.trim();
+            var lMoisture = req.body.moisture;
+            var lHumidity = req.body.humidity;
+            var lTemperature = req.body.temperature;
+            var lDateCreated = req.body.dateCreated;
+
+            // date object for joi
+            const dateobj = Joi.object().keys({
+                date: Joi.date().required(),
+                time: Joi.date().timestamp().required(),
+                offset: Joi.number().required()
+            });
+
+            // create schema for the properties that we will validate
+            // these are the values that will be required
+            const schema = {
+                garden: Joi.string().min(4).required(),
+                plant: Joi.string().min(4).required(),
+                waterUsed: Joi.string().min(4).required(),
+                moisture: Joi.number().min(2).required(),
+                humidity: Joi.number().min(2).required(),
+                temperature: Joi.number().min(2).required(),
+                dateCreated: dateobj
+            };
+
+            // get values and put it into a schema to be validated
+            // these are the values that we are given
+            const header_create = {
+                garden: gardenID,
+                plant: plantID,
+                waterUsed: lWater_Used,
+                moisture: lMoisture,
+                humidity: lHumidity,
+                temperature: lTemperature,
+                dateCreated: lDateCreated
+            };
+
+            // we validate the information provided
+            const { error } = Joi.validate(header_create, schema);
+
+            // we get the results
+            if (error) {
+                // 400 bad request if the information provided does not 
+                // match the schema
+                res.status(400).send(error.details[0].message);
+            }
+            else {
+                // retrieve information for the current user
+                userSchema.findOne({ 'local.email': user_email }, function (err, uSchema) {
+
+                    // single out the garden that the user provided
+                    var resG = uSchema.gardens.find(function (element) {
+                        return element._id.toString() === gardenID.toString();
+                    });
+
+                    // if the garden exists then we check if there are any plants in the garden
+                    if (resG !== undefined) {
+                        // if there are no plants, then we notify the user
+                        // else we get the plant that the user needs
+                        if (resG.plants.length < 1) {
+                            res.status(400).json("There are no plants in this garden!");
+                        }
+                        else {
+
+                            // single out the plant that the user wants to create a new log in.
+                            var plantR = resG.plants.find(function (element) {
+                                return element._id.toString() === plantID.toString();
+                            });
+
+                            // calling function to create a date that mongodb will accept
+                            var calcDate = createJSONDate(lDateCreated);
+
+                            plantR.logs = plantR.logs.concat({
+                                created_at: {
+                                    date: calcDate,
+                                    time: lDateCreated.time,
+                                    offset: lDateCreated.offset
+                                },
+                                waterUsed: lWater_Used,
+                                moisture: lMoisture,
+                                humidity: lHumidity,
+                                temperature: lTemperature
+                            });
+
+                            uSchema.save(function (err) {
+                                if (err) {
+                                    console.log(err);
+                                }
+                                else {
+                                    res.json("Log created!");
+                                }
+                            })
+                        }
+                    }
+                    else {
+                        res.status(400).json("No such garden exists!");
+                    }
+                });
+
+            }
         })
 
     // for the route apiRoutes, we will be starting the routing with /api/*
     app.use('/api', apiRoutes);
 
 };
+
+function createJSONDate(dateIn) {
+    var milliseconds = parseInt((dateIn.time % 1000) / 100)
+        , seconds = parseInt((dateIn.time / 1000) % 60)
+        , minutes = parseInt((dateIn.time / (1000 * 60)) % 60)
+        , hours = parseInt((dateIn.time / (1000 * 60 * 60)) % 24);
+
+    hours = (hours < 10) ? "0" + hours : hours;
+    minutes = (minutes < 10) ? "0" + minutes : minutes;
+    seconds = (seconds < 10) ? "0" + seconds : seconds;
+
+    var dateString = dateIn.date + "T" + hours + ":" + minutes + ":" + seconds + "Z";
+
+    return new Date(dateString);
+}
