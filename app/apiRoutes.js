@@ -244,7 +244,7 @@ module.exports = function (app, passport, express) {
 
 
             // retrieve values of the JSON get request
-            var gardenID = req.headers['garden_id'];
+            var gardenID = req.get('garden_id');
 
             const header_create = {
                 garden_id: gardenID
@@ -371,9 +371,9 @@ module.exports = function (app, passport, express) {
         .get(function (req, res) {
 
             // get the garden that the user wants to get the plant from
-            var gardenID = req.headers['garden_id'];
+            var gardenID = req.get('garden_id');
             // get the plant that the user wants to view the logs of
-            var plantID = req.headers['plant_id'];
+            var plantID = req.get('plant_id');
 
             // create schema for the properties that we will validate
             // these are the values that will be required
