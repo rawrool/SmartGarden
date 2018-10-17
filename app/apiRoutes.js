@@ -244,7 +244,7 @@ module.exports = function (app, passport, express) {
 
 
             // retrieve values of the JSON get request
-            var gardenID = req.get('garden_id');
+            var gardenID = req.get('gardenid');
 
             const header_create = {
                 garden_id: gardenID
@@ -371,7 +371,7 @@ module.exports = function (app, passport, express) {
         .get(function (req, res) {
 
             // get the garden that the user wants to get the plant from
-            var gardenID = req.get('garden_id');
+            var gardenID = req.get('gardenid');
             // get the plant that the user wants to view the logs of
             var plantID = req.get('plant_id');
 
