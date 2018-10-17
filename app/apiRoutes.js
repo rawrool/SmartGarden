@@ -247,13 +247,13 @@ module.exports = function (app, passport, express) {
             var gardenID = req.get('gardenid');
 
             const header_create = {
-                garden_id: gardenID
+                gardenid: gardenID
             };
 
             // validate api requests with JOI
             // create schema of what is required for each method call
             const schema = {
-                garden_id: Joi.string().min(4).required()
+                gardenid: Joi.string().min(4).required()
             };
 
             // validate the headers/ variables
@@ -298,7 +298,7 @@ module.exports = function (app, passport, express) {
         .post(function (req, res) {
 
             // retrieve values of the JSON get request
-            let gardenID = req.body.garden_id.trim();
+            let gardenID = req.body.gardenid.trim();
             let plantName = req.body.plantName.trim();
 
             // validate api requests with JOI
@@ -308,12 +308,12 @@ module.exports = function (app, passport, express) {
                 we can validate the data.
             */
             const header_create = {
-                garden_id: gardenID, plantName: plantName
+                gardenid: gardenID, plantName: plantName
             };
 
             // create schema of what is required for each method call
             const schema = {
-                garden_id: Joi.string().min(4).required(),
+                gardenid: Joi.string().min(4).required(),
                 plantName: Joi.string().min(4).required()
             };
 
@@ -373,20 +373,20 @@ module.exports = function (app, passport, express) {
             // get the garden that the user wants to get the plant from
             var gardenID = req.get('gardenid');
             // get the plant that the user wants to view the logs of
-            var plantID = req.get('plant_id');
+            var plantID = req.get('plantid');
 
             // create schema for the properties that we will validate
             // these are the values that will be required
             const schema = {
-                garden_id: Joi.string().min(4).required(),
-                plant_id: Joi.string().min(4).required()
+                gardenid: Joi.string().min(4).required(),
+                plantid: Joi.string().min(4).required()
             };
 
             // get values and put it into a schema to be validated
             // these are the values that we are given
             const header_create = {
-                garden_id: gardenID,
-                plant_id: plantID
+                gardenid: gardenID,
+                plantid: plantID
             };
 
             // we validate the information provided
@@ -446,9 +446,9 @@ module.exports = function (app, passport, express) {
 
         .post(function (req, res) {
             // get the garden that the user wants to get the plant from
-            var gardenID = req.body.garden_id.trim();
+            var gardenID = req.body.gardenid.trim();
             // get the plant that the user wants to view the logs of
-            var plantID = req.body.plant_id.trim();
+            var plantID = req.body.plantid.trim();
 
             // required log inputs for the plant
             var lWater_Used = req.body.waterUsed.trim();
