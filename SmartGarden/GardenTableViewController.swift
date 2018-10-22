@@ -37,9 +37,11 @@ class GardenTableViewController: UITableViewController {
     
     // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let gardenIndex = tableView.indexPathForSelectedRow?.row
-        UserDefaults.standard.set(gardens[gardenIndex ?? 0]["name"], forKey: "garden")
+        if let gardenIndex = tableView.indexPathForSelectedRow?.row {
+            UserDefaults.standard.set(gardens[gardenIndex]["name"], forKey: "garden")
+        }
     }
+    
     @IBAction func logOut(_ sender: Any) {
         UserDefaults.standard.set("", forKey: "username")
         UserDefaults.standard.set("", forKey: "token")
@@ -78,7 +80,7 @@ class GardenTableViewController: UITableViewController {
         
         do{
             //let postData = try JSONSerialization.data(withJSONObject: parameters, options: [])
-            let request = NSMutableURLRequest(url: NSURL(string: "http://ec2-18-191-18-131.us-east-2.compute.amazonaws.com/api/gardens")! as URL,
+            let request = NSMutableURLRequest(url: NSURL(string: "http://ec2-18-218-39-84.us-east-2.compute.amazonaws.com/api/gardens")! as URL,
                                               cachePolicy: .useProtocolCachePolicy,
                                               timeoutInterval: 10.0)
             
