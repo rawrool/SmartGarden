@@ -26,12 +26,24 @@ let Logs = {
     temperature: Number
 }
 
+let WaterSchedule = {
+    scheduleName: {type: String, required: true, sparse: true},
+    startTime: [{
+        time: Number,
+        offset: Number
+    }],
+    duration: [{ // durations must match the number of startTimes
+        time: Number // in milliseconds
+    }]
+}
+
 let Plants = {
     name: { type: String, required: false, sparse: true },
     plantSize: String,
     created_at: Date,
     updated_at: Date,
-    logs: [Logs]
+    logs: [Logs],
+    waterSchedules: [WaterSchedule]
 }
 
 let Gardens = {
@@ -48,12 +60,6 @@ let userSchema = mongoose.Schema({
         email: String,
         password: String,
         token: String
-    },
-    google: {
-        id: String,
-        token: String,
-        email: String,
-        name: String
     },
     gardens: [Gardens]
 });
