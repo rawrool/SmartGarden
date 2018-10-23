@@ -25,7 +25,7 @@ var bodyParser = require('body-parser');
 var session = require('express-session');
 
 var configDB = require('../config/database.js');
-var auth = require('../config/auth');
+var auth = require('../config/auth.js');
 
 // used to create, sign, and verify tokens
 var jwt = require('jsonwebtoken');
