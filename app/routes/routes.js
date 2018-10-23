@@ -82,9 +82,8 @@ app.post('/signup', passport.authenticate('local-signup', {
 // we will use route middleware to verify this (the isLoggedIn function)
 app.get('/profile', isLoggedIn, function (req, res) {
 
-
     // finding the document that belongs to the user.
-    userSchema.findOne({ $or: [{ 'local.email': req.user.local.email }, { 'google.email': req.user.google.email }] }, function (err, uSchema) {
+    userSchema.findOne({ 'local.email': req.user.local.email }, function (err, uSchema) {
 
         // this will render the profile page and it will set the values for user
         // gardens, and message so that we can work with them in ejs.
@@ -101,7 +100,7 @@ app.get('/profile', isLoggedIn, function (req, res) {
 // fix post for creating a new garden on profile page
 app.post('/profile', isLoggedIn, function (req, res) {
 
-    userSchema.findOne({ $or: [{ 'local.email': req.user.local.email }, { 'google.email': req.user.google.email }] }, function (err, uSchema) {
+    userSchema.findOne({ 'local.email': req.user.local.email }, function (err, uSchema) {
 
         // get the name of the garden from the headers and trim any extra white space
         var nameG = req.body.gardenName.trim();
@@ -164,7 +163,7 @@ app.post('/profile/:id', isLoggedIn, function (req, res) {
 
     // make proper call to delete the garden using garden name
     // finding the document associated with the user
-    userSchema.findOne({ $or: [{ 'local.email': req.user.local.email }, { 'google.email': req.user.google.email }] }, function (err, uSchema) {
+    userSchema.findOne({ 'local.email': req.user.local.email }, function (err, uSchema) {
 
         // isolating the garden object that was picked by the user.
         // we use the gardens ID to find it in the array.
@@ -229,21 +228,6 @@ app.get('/logout', function (req, res) {
     res.redirect('/');
 });
 
-// =====================================
-// GOOGLE ROUTES =======================
-// =====================================
-// send to google to do the authentication
-// profile gets us their basic information including their name
-// email gets their emails
-app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
-
-// the callback after google has authenticated the user
-app.get('/auth/google/callback',
-    passport.authenticate('google', {
-        successRedirect: '/account',
-        failureRedirect: '/'
-    }));
-
 // =============================================================================
 // AUTHORIZE (ALREADY LOGGED IN / CONNECTING OTHER SOCIAL ACCOUNT) =============
 // =============================================================================
@@ -257,47 +241,6 @@ app.post('/connect/local', passport.authenticate('local-signup', {
     failureRedirect: '/connect/local', // redirect back to the signup page if there is an error
     failureFlash: true // allow flash messages
 }));
-
-// google ---------------------------------
-
-// send to google to do the authentication
-app.get('/connect/google', passport.authorize('google', { scope: ['profile', 'email'] }));
-
-// the callback after google has authorized the user
-app.get('/connect/google/callback',
-    passport.authorize('google', {
-        successRedirect: '/account',
-        failureRedirect: '/'
-    }));
-
-
-
-// =============================================================================
-// UNLINK ACCOUNTS =============================================================
-// =============================================================================
-// used to unlink accounts. for social accounts, just remove the token
-// for local account, remove email and password
-// user account will stay active in case they want to reconnect in the future
-
-// local -----------------------------------
-app.get('/unlink/local', function (req, res) {
-    var user = req.user;
-    user.local.email = undefined;
-    user.local.password = undefined;
-    user.save(function (err) {
-        res.redirect('/account');
-    });
-});
-
-
-// google ---------------------------------
-app.get('/unlink/google', function (req, res) {
-    var user = req.user;
-    user.google.token = undefined;
-    user.save(function (err) {
-        res.redirect('/account');
-    });
-});
 
 module.exports = router;
 

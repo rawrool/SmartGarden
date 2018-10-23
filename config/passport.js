@@ -2,7 +2,6 @@
 
 // load all the things we need
 var LocalStrategy = require('passport-local').Strategy;
-var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 
 // load up new schema for testing
 const userSchema = require('../app/models/userSchema');
@@ -127,84 +126,6 @@ module.exports = function (passport) {
 
                 // all is well, return successful user
                 return done(null, user);
-            });
-
-        }));
-
-    // =========================================================================
-    // GOOGLE ==================================================================
-    // =========================================================================
-    passport.use(new GoogleStrategy({
-
-        clientID: configAuth.googleAuth.clientID,
-        clientSecret: configAuth.googleAuth.clientSecret,
-        callbackURL: configAuth.googleAuth.callbackURL,
-        passReqToCallback: true // allows us to pass in the req from our route (lets us check if a user is logged in or not)
-
-    },  // google will send back the token and profile.
-        function (req, token, refreshToken, profile, done) {
-
-            // asynchronous
-            process.nextTick(function () {
-
-                // check if the user is already logged in
-                if (!req.user) {
-                    // User.findOne won't fire until we have all our data back from Google.
-                    userSchema.findOne({ 'google.id': profile.id }, function (err, user) {
-                        if (err)
-                            return done(err);
-
-                        // if the user is found, then log them in
-                        if (user) {
-
-                            // if there is a user id already but no token (user was linked at one point and then removed)
-                            if (!user.google.token) {
-                                user.google.token = token;
-                                user.google.name = profile.displayName;
-                                user.google.email = profile.emails[0].value; // pull the first email
-
-                                user.save(function (err) {
-                                    if (err)
-                                        throw err;
-                                    return done(null, user);
-                                });
-                            }
-
-                            return done(null, user);
-                        } else {
-                            // if no user was found, with that google id then create a new user.
-                            var newUser = new userSchema();
-
-                            newUser.google.id = profile.id;
-                            newUser.google.token = token;
-                            newUser.google.name = profile.displayName;
-                            newUser.google.email = profile.emails[0].value; // pull the first email
-
-                            newUser.save(function (err) {
-                                if (err)
-                                    throw err;
-                                return done(null, newUser);
-                            });
-                        }
-                    });
-
-                } else {
-                    // user already exists and is logged in, we have to link accounts
-                    var user = req.user; // pull the user out of the session
-
-                    user.google.id = profile.id;
-                    user.google.token = token;
-                    user.google.name = profile.displayName;
-                    user.google.email = profile.emails[0].value; // pull the first email
-
-                    user.save(function (err) {
-                        if (err)
-                            throw err;
-                        return done(null, user);
-                    });
-
-                }
-
             });
 
         }));
