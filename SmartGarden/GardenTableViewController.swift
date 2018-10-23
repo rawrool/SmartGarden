@@ -14,7 +14,9 @@ class GardenTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action:  #selector(getGardens), for: UIControlEvents.valueChanged)
+        self.refreshControl = refreshControl
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -69,7 +71,7 @@ class GardenTableViewController: UITableViewController {
         return cell
     }
     
-    func getGardens() -> Bool{
+    @objc func getGardens() -> Bool{
         
         //set the header for the http request
         let headers = [
@@ -124,6 +126,8 @@ class GardenTableViewController: UITableViewController {
             print("Caught error: ", error)
             return false
         }
+        tableView.reloadData()
+        refreshControl?.endRefreshing()
         return true
     }
 
