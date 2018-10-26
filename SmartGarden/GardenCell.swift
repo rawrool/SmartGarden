@@ -8,8 +8,10 @@
 
 import UIKit
 
+//This class is used to customize the cells in the garden selection table
 class GardenCell: UITableViewCell {
     
+    //variable to display the garden name
     @IBOutlet weak var gardenNameLabel: UILabel!
     
 

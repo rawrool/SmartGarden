@@ -43,11 +43,10 @@ class FirstViewController: UIViewController {
         titleBar.title = gardenName
     }
     
+    //This function is called when the done button is pressed
     @IBAction func donePressed(_ sender: Any) {
+        //dismisses the current view and returns to the previous view
         dismiss(animated: true, completion: nil)
-    }
-    @IBAction func unwindSegue(_ sender : UIStoryboard){
-        
     }
 
 

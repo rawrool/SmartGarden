@@ -8,28 +8,21 @@
 
 import UIKit
 
-struct LoginResponse:Decodable{
-    let success:String
-    let message:String
-    let token:String
-    
-    init(json: [String: Any]){
-        success = json["success"] as? String ?? ""
-        message = json["message"] as? String ?? ""
-        token = json["token"] as? String ?? ""
-    }
-}
-
 class LoginViewController: UIViewController {
     @IBOutlet weak var usernameText: UITextField!
     @IBOutlet weak var passwordText: UITextField!
     @IBOutlet weak var loginButton: UIButton!
     
+    //This function dictates what happens when the login button is tapped
     @IBAction func loginButtonTapped(_ sender: Any) {
-       
+        //try to log the user in
         attemptLogin( username:usernameText.text!, password:passwordText.text!)
+        //Wait for the process to finish. There has to be a better way to do this
         sleep(1)
+        
+        //Check the loginStatus flag to see if it was successful
         let loggedIn = (UserDefaults.standard.object(forKey: "loginStatus")) as? Bool ?? false
+        
         if(loggedIn){
             //Print the stored username and token
             print(UserDefaults.standard.object(forKey: "username") ?? "No Username")
@@ -111,23 +104,27 @@ class LoginViewController: UIViewController {
             ] as [String : Any]
         
         do{
+            //Set up for the server request
             let postData = try JSONSerialization.data(withJSONObject: parameters, options: [])
             let request = NSMutableURLRequest(url: NSURL(string: "http://ec2-18-218-39-84.us-east-2.compute.amazonaws.com/api/authenticate")! as URL,
                                               cachePolicy: .useProtocolCachePolicy,
                                               timeoutInterval: 10.0)
-            
+            //set the request type to a post request
             request.httpMethod = "POST"
             request.allHTTPHeaderFields = headers
             request.httpBody = postData as Data
             
             let session = URLSession.shared
             
+            //the nested function is where the data processing happens from the server's response
             let dataTask = session.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
                 guard error == nil else {
+                    //if the server returns an error we will print it and return
                     return
                 }
                 
                 guard let data = data else {
+                    //if there is nothing in the data variable we stop here
                     return
                 }
                 
@@ -135,22 +132,27 @@ class LoginViewController: UIViewController {
                     //create json object from data
                     if let json = try JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? [String: Any] {
                         guard let success = json["success"] else { return }
-                        print("Success Message:")
-                        print(success)
                         
+                        //print("Success Message:")
+                        //print(success)
+                        
+                        //Set the loginStatus flag based on the success of the server request
                         if(success as? Bool ?? false){
                             UserDefaults.standard.set(true, forKey: "loginStatus")
                         } else { UserDefaults.standard.set(false, forKey: "loginStatus")}
                         
                         if success as? Bool ?? false{
+                            //Ensure a token was returned
                             guard let token = json["token"] else { return }
-                            let username = UserDefaults.standard.object(forKey: "username") as Any?
+                            
+                            //let username = UserDefaults.standard.object(forKey: "username") as Any?
                             
                             //possibly switch to using the username as the key for the stored token
                             UserDefaults.standard.set(token, forKey: "token")
                         }
                     }
                 } catch let error {
+                    //if an error is thrown we print it here
                     print(error.localizedDescription)
                 }
             })
@@ -158,6 +160,7 @@ class LoginViewController: UIViewController {
             dataTask.resume()
         }
         catch{
+            //if an error is thrown we print it here
             print("Caught error: ", error)
             return
         }
