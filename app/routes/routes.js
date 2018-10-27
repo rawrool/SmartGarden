@@ -141,13 +141,30 @@ app.get('/profile/:id', isLoggedIn, function (req, res) {
 
     gardenO = gardenO.replace(':', '');
 
-    console.log("***OPENING GARDEN: " + gardenO);
-
     // make proper call to display the garden
+    // make proper call to the garden using garden name
+    // finding the document associated with the user
+    userSchema.findOne({ 'local.email': req.user.local.email }, function (err, uSchema) {
 
+        // singling out the garden that the user provided from the gardens
+        // that the user owns
+        var resG = uSchema.gardens.find(function (element) {
+            return element._id.toString() === gardenO.toString();
+        });
 
-    // render the garden page
-    res.redirect('/profile');
+        // if the garden exists then we check if there are any plants in the garden
+        if (resG !== undefined) {
+            // render the garden page
+            res.render('garden.ejs', {
+                user: req.user,
+                gardenID: gardenO,
+                garden: resG,
+                plants: resG.plants,
+                message: req.flash('duplicatedMessage')
+            });
+        }
+
+    });
 });
 
 app.post('/profile/:id', isLoggedIn, function (req, res) {
@@ -210,13 +227,141 @@ app.get('/account', isLoggedIn, function (req, res) {
 // =====================================
 // GARDEN SECTION ======================
 // =====================================
-app.get('/garden', isLoggedIn, function (req, res) {
-    res.render('garden.ejs', {
-        user: req.user // get the user out of session and pass to garden.
-        /*
-            will do the same with gardens once I put it in the database.
-            garden: req.garden, or something of the sort.
-        */
+// app.get('/garden', isLoggedIn, function (req, res) {
+//     res.render('garden.ejs', {
+//         user: req.user // get the user out of session and pass to garden.
+//         /*
+//             will do the same with gardens once I put it in the database.
+//             garden: req.garden, or something of the sort.
+//         */
+//     });
+// });
+
+
+app.post('/garden', isLoggedIn, function (req, res) {
+    // get the garden to display
+    var nameP = req.body.plantName.trim();
+    var gardenID = req.body.gardenID.trim();
+
+    userSchema.findOne({ 'local.email': req.user.local.email }, function (err, uSchema) {
+
+        // singling out the garden with the name that the user provided
+        // from the gardens that the user owns
+        var resG = uSchema.gardens.find(function (element) {
+            return element._id.toString() === gardenID.toString();
+        });
+
+        // checking if the garden exists, if it does then we create the new plant
+        if (resG !== undefined) {
+            // adding the new plant that the user wants to create.
+            resG.plants = resG.plants.concat({ name: nameP });
+
+            // saving the changes to the database for the users garden.
+            uSchema.save(function (err) {
+                if (err) {
+                    console.log(err);
+                }
+                else {
+                    res.render('garden.ejs', {
+                        user: req.user,
+                        gardenID: gardenID,
+                        garden: resG,
+                        plants: resG.plants,
+                        message: req.flash('duplicatedMessage')
+                    });
+                }
+            });
+        }
+
+    });
+});
+
+
+
+app.get('/gardens/:id', isLoggedIn, function (req, res) {
+
+    // get the garden to display
+    let reqID = req.params.id.trim();
+
+    reqID = reqID.split(":");
+
+    var plantO = reqID[1];
+    var gardenO = reqID[2];
+
+    // // make proper call to display the garden
+    // // make proper call to the plant using plant name
+    // // finding the document associated with the user
+    // userSchema.findOne({ 'local.email': req.user.local.email }, function (err, uSchema) {
+
+    //     // singling out the garden that the user provided from the gardens
+    //     // that the user owns
+    //     var resG = uSchema.gardens.find(function (element) {
+    //         return element._id.toString() === gardenO.toString();
+    //     });
+
+    //     // if the garden exists then we check if there are any plants in the garden
+    //     if (resG !== undefined) {
+    //         // render the garden page
+    //         res.render('garden.ejs', {
+    //             user: req.user,
+    //             gardenID: gardenO,
+    //             garden: resG,
+    //             plants: resG.plants,
+    //             message: req.flash('duplicatedMessage')
+    //         });
+    //     }
+
+    // });
+});
+
+app.post('/gardens/:id', isLoggedIn, function (req, res) {
+
+
+    // get the garden to display
+    let reqID = req.params.id.trim();
+
+    reqID = reqID.split(":");
+
+    var plantO = reqID[1];
+    var gardenO = reqID[2];
+
+    // retrieve information for the current user
+    userSchema.findOne({ 'local.email': req.user.local.email }, function (err, uSchema) {
+
+        // single out the garden that the user provided
+        var resG = uSchema.gardens.find(function (element) {
+            return element._id.toString() === gardenO.toString();
+        });
+
+        // if the garden exists then we check if there are any plants in the garden
+        if (resG !== undefined) {
+
+
+            // single out the plant that the user wants to create a new log in.
+            var plantR = resG.plants.find(function (element) {
+                return element._id.toString() === plantO.toString();
+            });
+
+            if (plantR !== undefined) {
+                resG.plants.remove(plantR);
+
+                uSchema.save(function (err) {
+                    if (err) {
+                        console.log(err);
+                    }
+                    else {
+                        res.render('garden.ejs', {
+                            user: req.user,
+                            gardenID: gardenO,
+                            garden: resG,
+                            plants: resG.plants,
+                            message: req.flash('duplicatedMessage')
+                        });
+                    }
+                });
+            }
+
+        }
     });
 });
 
