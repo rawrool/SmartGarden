@@ -6,6 +6,7 @@ routes.use('/api', require('./authenticate'));
 routes.use('/api', require('./gardens'));
 routes.use('/api', require('./plants'));
 routes.use('/api', require('./logs'));
+routes.use('/api', require('./settings'));
 routes.use(require('./routes'));
 
 // =========================================================================================
