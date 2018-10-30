@@ -9,8 +9,8 @@ var express = require('express');
 var app = module.exports = express(), passport;
 var port = 3000;
 
-var http = require('http').Server(app);
-var io = require('socket.io')(http);
+// var http = require('http').Server(app);
+// var io = require('socket.io')(http);
 // mongoose is object modeling for our mongoDB database
 var mongoose = require('mongoose');
 
@@ -64,7 +64,7 @@ module.exports.passport = passport;
 app.use(require('./routes'));
 
 
-require('./sockets')(io);
+// require('./sockets')(io);
 
 // launch ======================================================================
 app.listen(port);
