@@ -288,30 +288,37 @@ app.get('/gardens/:id', isLoggedIn, function (req, res) {
     var plantO = reqID[1];
     var gardenO = reqID[2];
 
-    // // make proper call to display the garden
-    // // make proper call to the plant using plant name
-    // // finding the document associated with the user
-    // userSchema.findOne({ 'local.email': req.user.local.email }, function (err, uSchema) {
+    userSchema.findOne({ 'local.email': req.user.local.email }, function (err, uSchema) {
 
-    //     // singling out the garden that the user provided from the gardens
-    //     // that the user owns
-    //     var resG = uSchema.gardens.find(function (element) {
-    //         return element._id.toString() === gardenO.toString();
-    //     });
+        // singling out the garden that the user provided from the gardens
+        // that the user owns
+        var resG = uSchema.gardens.find(function (element) {
+            return element._id.toString() === gardenO;
+        });
 
-    //     // if the garden exists then we check if there are any plants in the garden
-    //     if (resG !== undefined) {
-    //         // render the garden page
-    //         res.render('garden.ejs', {
-    //             user: req.user,
-    //             gardenID: gardenO,
-    //             garden: resG,
-    //             plants: resG.plants,
-    //             message: req.flash('duplicatedMessage')
-    //         });
-    //     }
+        // if the garden exists then we check if there are any plants in the garden
+        if (resG !== undefined) {
 
-    // });
+            var plantR = resG.plants.find(function (element) {
+                return element._id.toString() === plantO.toString();
+            });
+
+            if (plantR !== undefined) {
+
+                // render the garden page
+                res.render('settings.ejs', {
+                    user: req.user,
+                    gardenID: gardenO,
+                    garden: resG,
+                    plantID: plantO,
+                    plant: plantR,
+                    logs: plantR.logs,
+                    schedules: plantR.waterSchedules,
+                    message: req.flash('duplicatedMessage')
+                });
+            }
+        }
+    });
 });
 
 app.post('/gardens/:id', isLoggedIn, function (req, res) {
@@ -364,6 +371,116 @@ app.post('/gardens/:id', isLoggedIn, function (req, res) {
         }
     });
 });
+
+app.post('/settings', isLoggedIn, function (req, res) {
+    // get the garden to display
+    var plantO = req.body.plantID.trim();
+    var gardenID = req.body.gardenID.trim();
+    var scheduleN = req.body.scheduleName.trim();
+    var duration = req.body.Duration.trim();
+    var startT = req.body.startT.trim();
+    var startT2 = req.body.startT2;
+
+    var hour, hour2, minutes, minutes2;
+
+    var time1mill, time2mill;
+
+    if (startT2 === undefined) {
+        // get time out of the start time input
+        var timeVals = startT.split(":");
+        hour = timeVals[0];
+        minutes = timeVals[1].replace(/\D/g, '');
+    }
+    else {
+        // get time out of the start time input
+        var timeVals = startT.split(":");
+        hour = timeVals[0];
+        minutes = timeVals[1].replace(/\D/g, '');
+
+        // get the second time out of the second time input
+        var timeVal2 = startT2.split(":");
+        hour2 = timeVal2[0];
+        minutes2 = timeVal2[1].replace(/\D/g, '');
+    }
+
+    // convert hours to milliseconds
+    if (hour2 === undefined) {
+        time1mill = (hour * 3600000) + (minutes * 60000);
+        time2mill = 0;
+        durationmill = duration * 60000;
+    }
+    else {
+        time1mill = (hour * 3600000) + (minutes * 60000);
+        time2mill = (hour2 * 3600000) + (minutes2 * 60000);
+        durationmill = duration * 60000;
+    }
+
+    userSchema.findOne({ 'local.email': req.user.local.email }, function (err, uSchema) {
+
+        // singling out the garden with the name that the user provided
+        // from the gardens that the user owns
+        var resG = uSchema.gardens.find(function (element) {
+            return element._id.toString() === gardenID.toString();
+        });
+
+        // if the garden exists then we check if there are any plants in the garden
+        if (resG !== undefined) {
+
+            var plantR = resG.plants.find(function (element) {
+                return element._id.toString() === plantO.toString();
+            });
+
+            if (plantR !== undefined) {
+
+                plantR.waterSchedules = plantR.waterSchedules.concat({
+                    scheduleName: scheduleN,
+                    default: false,
+                    startTime: [
+                        {
+                            time: time1mill,
+                            offset: 7
+                        },
+                        {
+                            time: time2mill,
+                            offset: 7
+                        }
+                    ],
+                    duration: [
+                        {
+                            time: durationmill
+                        },
+                        {
+                            time: durationmill
+                        }
+                    ]
+                });
+
+
+                uSchema.save(function (err) {
+                    if (err) {
+                        console.log(err);
+                    }
+                    else {
+                        // render the garden page
+                        res.render('settings.ejs', {
+                            user: req.user,
+                            gardenID: gardenID,
+                            garden: resG,
+                            plantID: plantO,
+                            plant: plantR,
+                            logs: plantR.logs,
+                            schedules: plantR.waterSchedules,
+                            message: req.flash('duplicatedMessage')
+                        });
+                    }
+                });
+
+            }
+        }
+
+    });
+});
+
 
 // =====================================
 // LOGOUT ==============================
