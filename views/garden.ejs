@@ -13,9 +13,8 @@
     <div class="container">
         <div class="page-header text-center">
             <h1>
-                <img src="smartgarden_icon.png" width="150" height="200" />
                 <br />
-                <br />Profile Page</h1>
+                <br />Garden Page</h1>
             <a href="/account" class="btn btn-default btn-sm">Account</a>
             <a href="/logout" class="btn btn-default btn-sm">Logout</a>
         </div>
@@ -82,7 +81,7 @@
                             <br>
                             <br>
                             <form action="/gardens/:<%= plant.id %>:<%= gardenID %>" method="get">
-                                <button type="submit" class="btn btn-info btn-sm pull-left">Logs</button>
+                                <button type="submit" class="btn btn-info btn-sm pull-left">Settings</button>
                             </form>
                             <form action="/gardens/:<%= plant.id %>:<%= gardenID %>" method="post">
                                 <button type="submit" class="btn btn-danger btn-sm pull-right" data-toggle="modal"
