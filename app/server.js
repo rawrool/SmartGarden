@@ -9,6 +9,8 @@ var express = require('express');
 var app = module.exports = express(), passport;
 var port = 3000;
 
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
 // mongoose is object modeling for our mongoDB database
 var mongoose = require('mongoose');
 
@@ -54,11 +56,15 @@ app.use(flash()); // use connect-flash for flash messages stored in session
 
 app.use(express.static("../public"));
 app.set('views', '../views');
+app.use(express.static('../bower_components'));
 
 
 module.exports.passport = passport;
 // routes ======================================================================
 app.use(require('./routes'));
+
+
+require('./sockets')(io);
 
 // launch ======================================================================
 app.listen(port);
