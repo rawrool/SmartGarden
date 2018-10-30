@@ -28,6 +28,7 @@ let Logs = {
 
 let WaterSchedule = {
     scheduleName: {type: String, required: true, sparse: true},
+    default: Boolean,
     startTime: [{
         time: Number,
         offset: Number
