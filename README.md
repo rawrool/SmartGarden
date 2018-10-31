@@ -12,3 +12,24 @@ users hands and automates watering based on the moisture of the soil.
 The Smart Garden will take moisture and temperature readings to decide if the garden needs more water. 
 These readings will be stored in a database that is accessible online and can be accessed through pc or 
 mobile smartphone. The data can be used to further research on the best watering method that fits for different kinds of plants.
+
+
+<h1>Installation</h1>
+
+NPM and Bower are needed. Bower is deprecated and it is recommended that no one should be using it anymore, and the
+project will stop using bower and migrate to Yarn in the future.
+
+Install npm with:
+
+<pre><code>npm install npm@latest -g</code></pre>
+
+Install bower with: 
+
+<pre><code>npm install -g bower </code></pre>
+
+Install all npm dependencies
+<pre><code>npm install</code></pre>
+
+
+Install all bower dependencies:
+<pre><code>bower install</code></pre>
