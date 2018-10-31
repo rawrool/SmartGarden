@@ -9,10 +9,10 @@
 import UIKit
 
 class GardenTableViewController: UITableViewController {
-    //sample garden names
+    // sample garden names
     var gardens = [["name": "A", "_id": "3asdfasdfg"], ["name": "B", "_id": "3asdgasdfg"]]
     
-    //this function runs everytime the view is loaded
+    // this function runs everytime the view is loaded
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -35,9 +35,11 @@ class GardenTableViewController: UITableViewController {
         // Get the gardens from the server
         getGardens()
         
-        //FIND A WAY TO WAIT FOR THE HTTP REQUEST TO FINISH BEFORE SHOWING SCREEN, OR REFRESHING TABLE AFTER THE REQUEST FINISHES
+        // Wait for the the server request to finish
         sleep(1)
-        print("Got Gardens")
+        
+        // Reload the table data
+        tableView.reloadData()
     }
 
     override func didReceiveMemoryWarning() {
@@ -47,7 +49,7 @@ class GardenTableViewController: UITableViewController {
     
     // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        //Navigate to the next screen and store the selected garden so the next view can use it
+        // Navigate to the next screen and store the selected garden so the next view can use it
         if let gardenIndex = tableView.indexPathForSelectedRow?.row {
             UserDefaults.standard.set(gardens[gardenIndex]["name"], forKey: "garden")
         }
@@ -89,7 +91,7 @@ class GardenTableViewController: UITableViewController {
     }
     
     //This function gets the user's gardens from the server
-    @objc func getGardens() -> Bool{
+    @objc func getGardens(){
         
         //set the header for the http request
         let headers = [
@@ -149,10 +151,7 @@ class GardenTableViewController: UITableViewController {
             
             dataTask.resume()
         }
-        //refresh the table with our new garden data
-        tableView.reloadData()
-        refreshControl?.endRefreshing()
-        return true
+        return
     }
 
     /*

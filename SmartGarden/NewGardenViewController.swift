@@ -29,7 +29,7 @@ class NewGardenViewController: UIViewController {
         if(gardenName.text != nil){
             //call the function to talk to the server
             attemptGarden(name: gardenName.text ?? "")
-            //wait for the function to finish. There must be a better way to do this
+            //wait for the function to finish.
             sleep(1)
             
             //check the flag to see if the garden was created
@@ -70,7 +70,7 @@ class NewGardenViewController: UIViewController {
         let parameters = [
             "email": UserDefaults.standard.object(forKey: "username") ?? "no username",
             "token": UserDefaults.standard.object(forKey: "token") ?? "no token",
-            "gardenName": name
+            "garden": name
             ] as [String : Any]
         do{
             //set up for the server request
@@ -88,21 +88,19 @@ class NewGardenViewController: UIViewController {
             //the nested function is where the data processing happens from the server's response
             let dataTask = session.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
                 guard error == nil else {
-                    //if the server returns an error we will print it and return
+                    //if the http request returns an error then stop here
                     return
                 }
-                
                 guard let data = data else {
                     //if there is nothing in the data variable we stop here
                     return
                 }
+                //print(String(decoding: data, as: UTF8.self))
                 do {
                     //create json object from data
                     if let json = try JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? [String: Any] {
-                        //print("About to set success variable")
+                        //Try to parse out the message
                         guard let message = json["message"] else { return }
-                        
-                        //print(success as? String ?? "Nothing to convert setting to false")
                         
                         //Check whether the server says the garden was created and set our flag accordingly
                         if(message as? String ?? "" == "Garden Created!"){
@@ -115,7 +113,6 @@ class NewGardenViewController: UIViewController {
                     }
                 } catch let error {
                     //if an error is thrown we print it here
-                    print("there was an error")
                     print(error.localizedDescription)
                 }
             })

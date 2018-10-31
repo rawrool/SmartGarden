@@ -24,9 +24,6 @@ class LoginViewController: UIViewController {
         let loggedIn = (UserDefaults.standard.object(forKey: "loginStatus")) as? Bool ?? false
         
         if(loggedIn){
-            //Print the stored username and token
-            print(UserDefaults.standard.object(forKey: "username") ?? "No Username")
-            print(UserDefaults.standard.object(forKey: "token") ?? "No Token")
             //Clear textfields
             usernameText.text = ""
             passwordText.text = ""
@@ -34,9 +31,9 @@ class LoginViewController: UIViewController {
             performSegue(withIdentifier: "loggedIn", sender: sender)
         }
         else{
-            //display login error alert
-            loginErrorAlert()
-        }//end else
+            //Display reason for login error to user
+            loginErrorAlert(msg: UserDefaults.standard.object(forKey: "loginMessage") as? String ?? "Error with username or password")
+        }
     }//end loginButtonTapped
     
     override func viewDidLoad() {
@@ -49,16 +46,7 @@ class LoginViewController: UIViewController {
     }//end viewDidLoad
     
     override func viewDidAppear(_ animated: Bool) {
-        if let username = UserDefaults.standard.object(forKey: "username"){
-            print(username)
-        } else {
-            print("No username stored")
-        }
-        //Check if the user has a token and if so move past login screen
-        //need to see if token is valid
-        //if let token = UserDefaults.standard.object(forKey: "token"){
-            //performSegue(withIdentifier: "loggedIn", sender: self)
-        //}
+        //Future - Check for stored username and token to auto login
     }//end viewDidAppear
     
     override func didReceiveMemoryWarning() {
@@ -82,9 +70,9 @@ class LoginViewController: UIViewController {
     */
     
     //Displays an alert to the user that the login failed
-    func loginErrorAlert() {
+    func loginErrorAlert(msg: String) {
         let alertController = UIAlertController(title: "Login Error", message:
-            "Unable to login with that username/password.", preferredStyle: UIAlertControllerStyle.alert)
+            msg, preferredStyle: UIAlertControllerStyle.alert)
         alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default,handler: nil))
         
         self.present(alertController, animated: true, completion: nil)
@@ -133,23 +121,27 @@ class LoginViewController: UIViewController {
                     if let json = try JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? [String: Any] {
                         guard let success = json["success"] else { return }
                         
-                        //print("Success Message:")
-                        //print(success)
-                        
-                        //Set the loginStatus flag based on the success of the server request
+                       
                         if(success as? Bool ?? false){
+                            //Set the loginStatus flag to true since login was successful
                             UserDefaults.standard.set(true, forKey: "loginStatus")
-                        } else { UserDefaults.standard.set(false, forKey: "loginStatus")}
-                        
-                        if success as? Bool ?? false{
+                            
                             //Ensure a token was returned
                             guard let token = json["token"] else { return }
                             
-                            //let username = UserDefaults.standard.object(forKey: "username") as Any?
-                            
-                            //possibly switch to using the username as the key for the stored token
+                            //store the user's token for requests
                             UserDefaults.standard.set(token, forKey: "token")
+                            
                         }
+                        else {
+                            //Set the loginStatus flag to false since login was not successful
+                            UserDefaults.standard.set(false, forKey: "loginStatus")
+                            
+                            //Alert the user of the login error
+                            guard let message = json["message"] else { return }
+                            UserDefaults.standard.set(message, forKey: "loginMessage")
+                        }
+                        
                     }
                 } catch let error {
                     //if an error is thrown we print it here
