@@ -73,7 +73,7 @@ void loop()
 {
   writeData();
   maximizeSolarPower();
-  es2.sleepSeconds(14400); // Sleep for 4 hours(3600/h)
+  es2.sleepSeconds(21600); // Sleep for 6 hours(3600/h)
 }
 
 int convertToPercentage(int value)
@@ -192,5 +192,67 @@ void writeData(){
   if(soilPercentage < 75){
     waterGarden();  
   }
+  
+}
+
+int readDate()
+{
+  // open the file
+  File dateFile = SD.open("date.txt", FILE_WRITE);  
+
+  // variables to store dates
+  int date;
+  int newDate;
+
+  // variables to store counter
+  int counter;
+  int newCounter;
+  
+  // if the file is available, read it:
+  if (dateFile) {
+    date = dateFile.read();
+    dateFile.close();
+  }
+
+  // open counterFile
+  File counterFile = SD.open("counter.txt", FILE_WRITE);
+
+  // if the file is available, read it:
+  if (counterFile) {
+    counter = counterFile.read(); 
+    counterFile.close();
+  }
+
+  // check if allotted time for a new day has passed
+  if (counter == 4){
+    // delete old date file
+    SD.remove("date.txt");
+  
+    // recreate dateFile
+    File dateFile = SD.open("date.txt", FILE_WRITE);
+
+    // if the file is available, write to it:
+    if (dateFile) {
+      newDate = date + 1;
+      dateFile.print(newDate);
+      dateFile.close();
+    }
+
+    // reset counter
+    counter = 0;
+  }
+
+  // delete old counter file
+  SD.remove("counter.txt");
+  
+  // recreate counterFile
+  File counterFile = SD.open("counter.txt", FILE_WRITE);
+
+  // if the file is available, write to it:
+  if (counterFile) {
+    newCounter = counter + 1;
+    counterFile.print(newCounter);
+    counterFile.close();
+  } 
   
 }
