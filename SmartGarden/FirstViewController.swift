@@ -23,18 +23,12 @@ class FirstViewController: UIViewController {
     //variable to manipulate the sprinkler label
     @IBOutlet weak var sprinklerLabel: UILabel!
     
-    //variable linked to the "Garden Details"
-    @IBOutlet weak var detailsButton: UIButton!
-    
     //Navigation bar with the title and done button
     @IBOutlet weak var titleBar: UINavigationItem!
     
     //Look up SwiftyGif or something to display a GIF File
     override func viewDidLoad() {
         super.viewDidLoad()
-        //Next two lines rounds out the button to look more appealing
-        detailsButton.layer.cornerRadius = 10
-        detailsButton.clipsToBounds = true
     }
     
     override func viewWillAppear(_ animated: Bool) {

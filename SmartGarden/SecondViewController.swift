@@ -36,6 +36,11 @@ class SecondViewController: UIViewController, UITableViewDataSource {
     //runs as soon as the view is loaded
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //Add the background and dim it to match the rest of the app
+        tableView.backgroundView = UIImageView(image: UIImage(named: "japaneseGardens"))
+        tableView.backgroundView?.alpha = 0.5
+        
         //loops through and fills the structure array with readings
         for i in 0..<10{
             readings.append(GardenReading(temp:temps[i], hum:hums[i], date:Date.init()))

@@ -36,7 +36,7 @@ class NewGardenViewController: UIViewController {
             let created = UserDefaults.standard.object(forKey: "gardenCreated") as? Bool ?? false
             if(!created){
                 //If it was not created, display an alert to the user
-                ErrorAlert(text: "Something went wrong and the garden could not be created")
+                ErrorAlert(text: "The garden could not be created at this time. Please try again later.")
             }
             else{
                 //if it was created, return to the garden selection screen
@@ -114,6 +114,9 @@ class NewGardenViewController: UIViewController {
                 } catch let error {
                     //if an error is thrown we print it here
                     print(error.localizedDescription)
+                    
+                    UserDefaults.standard.set(false, forKey: "gardenCreated")
+                    return
                 }
             })
             

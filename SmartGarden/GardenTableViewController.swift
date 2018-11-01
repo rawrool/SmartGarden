@@ -16,6 +16,10 @@ class GardenTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //Add the background and dim it to match the rest of the app
+        tableView.backgroundView = UIImageView(image: UIImage(named: "japaneseGardens"))
+        tableView.backgroundView?.alpha = 0.5
+        
         // The next 3 lines give the table pull down to refresh functionality
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action:  #selector(getGardens), for: UIControlEvents.valueChanged)
