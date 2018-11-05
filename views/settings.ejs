@@ -81,12 +81,20 @@
 
                     <br>
 
-                    <div class="row">
+                    <div class="row" id="schedule_list">
+                        <% var i = 0; %>
                         <% schedules.forEach(function (schedule) { %>
                         <div class="col-sm-4" id="schedules">
                             <br>
+                            <% if (schedule.default === true) { %>
+                            <b><em>*** Default ***</em></b>
+                            <% } %>
+                            <br>
                             <b>Schedule Name: </b>
                             <%= schedule.scheduleName %>
+                            <br>
+                            <b>Schedule ID: </b>
+                            <%= schedule._id %>
                             <br>
                             <b>Start Time: </b>
                             <%= Math.floor((schedule.startTime[0].time / 3600000)) %> :
@@ -98,7 +106,7 @@
                             <br>
                             <ul class="nav navbar-nav">
                                 <li>
-                                    <form action="/settings/:<%= schedule.id %>:<%= plantID %>:<%= gardenID %>" method="get">
+                                    <form action="/edit/:<%= schedule.id %>:<%= plantID %>:<%= gardenID %>" method="get">
                                         <button type="submit" class="btn btn-info btn-sm">Edit</button>
                                     </form>
                                 </li>
@@ -110,14 +118,14 @@
                                     </form>
                                 </li>
                                 <li>
-                                    <form action="/settings/:<%= schedule.id %>:<%= plantID %>:<%= gardenID %>" method="post">
-                                        <button type="submit" class="btn btn-warning btn-sm" data-toggle="modal"
-                                            data-target="#deleteSchedule">Default
-                                        </button>
-                                    </form>
+                                    <button id="setSettings_<%= i %>" class="btn btn-warning btn-sm" data-toggle="modal"
+                                        data-target="#setSchedule" value="<%= schedule._id %>:<%= plantID %>:<%= gardenID %>:<%= user %>"
+                                        onclick="setDefault(<%= i %> )">Default
+                                    </button>
                                 </li>
                             </ul>
                         </div>
+                        <% i = i + 1; %>
                         <% }) %>
                     </div>
                 </div>
@@ -146,7 +154,8 @@
             </div>
         </div>
     </div>
-    
+
+    <script src="/socket.io/socket.io.js"></script>
     <script type="text/javascript">
         $(function () {
             $('#datetimepicker1').datetimepicker({
