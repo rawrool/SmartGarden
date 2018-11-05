@@ -6,11 +6,14 @@
 
 // express is the framework
 var express = require('express');
-var app = module.exports = express(), passport;
+var app = module.exports = express(), passport, io;
 var port = 3000;
 
-// var http = require('http').Server(app);
-// var io = require('socket.io')(http);
+// used for setting up socket.io
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
+
+
 // mongoose is object modeling for our mongoDB database
 var mongoose = require('mongoose');
 
@@ -64,8 +67,10 @@ module.exports.passport = passport;
 app.use(require('./routes'));
 
 
-// require('./sockets')(io);
+require('./sockets')(io);
 
 // launch ======================================================================
-app.listen(port);
+http.listen(3000, function(){
+    console.log('listening on *:3000');
+  });
 console.log('The magic happens on port ' + port);
