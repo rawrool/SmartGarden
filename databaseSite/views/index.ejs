@@ -1,0 +1,35 @@
+<!-- views/index.ejs -->
+<!doctype html>
+<html>
+
+<head>
+    <% include ./partials/head %>
+</head>
+
+<body>
+    <header>
+        <% include ./partials/header %>
+    </header>
+    <div class="container">
+
+        <div class="jumbotron text-center">
+
+            <!-- <span class="fa fa-lock"></span> -->
+
+            <h1>
+                <img src="smartGarden_icon.png" width="150" height="200" />
+                <br/> Welcome to Smart Garden
+            </h1>
+            <br/>
+            <p>Login or Register to Access your Smart Garden:</p>
+
+            <a href="/login" class="btn btn-default">
+                <span class="fa fa-user"></span> Login</a>
+            <a href="/signup" class="btn btn-default">
+                <span class="fa fa-user"></span> Signup</a>
+        </div>
+
+    </div>
+</body>
+
+</html>

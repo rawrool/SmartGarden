@@ -1,0 +1,4 @@
+node_modules/
+config/auth.js
+package-lock.json
+bower_components/

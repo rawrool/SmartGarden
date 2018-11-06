@@ -1,0 +1,102 @@
+<!-- views/profile.ejs -->
+<!doctype html>
+<html>
+
+<head>
+    <% include ./partials/head %>
+</head>
+
+<body>
+    <header>
+        <% include ./partials/header %>
+    </header>
+    <div class="container">
+        <div class="page-header text-center">
+            <h1>
+                <img src="smartGarden_icon.png" width="150" height="200" />
+                <br />
+                <br />Profile Page</h1>
+            <a href="/account" class="btn btn-default btn-sm">Account</a>
+            <a href="/logout" class="btn btn-default btn-sm">Logout</a>
+        </div>
+
+        <!-- show any messages that come back with authentication -->
+        <% if (message.length > 0) { %>
+        <div class="alert alert-danger">
+            <%= message %>
+        </div>
+        <% } %>
+        <div class="row">
+            <!-- Gardens -->
+            <div class="col-sm-12">
+                <div class="well">
+                    <h3>
+                        <i class="material-icons" style="font-size:36px">
+                            spa
+                        </i> Gardens
+                        <!-- Trigger the modal with a button -->
+                        <button type="button" class="btn btn-info btn-sm pull-right" data-toggle="modal" data-target="#createGardenModal">Create
+                            Garden
+                        </button>
+                        <br>
+                    </h3>
+                    <!-- Modal -->
+                    <div class="modal fade" id="createGardenModal" role="dialog">
+                        <div class="modal-dialog">
+
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title">Create a new Garden</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="/profile" method="post">
+                                        <div class="form-group">
+                                            <label>Garden Name</label>
+                                            <input type="text" class="form-control" name="gardenName">
+                                        </div>
+                                        <button type="submit" class="btn btn-default">Create</button>
+                                    </form>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <br>
+
+                    <div class="row">
+                        <% gardens.forEach(function (garden) { %>
+                        <div class="col-sm-4">
+                            <br>
+                            <b>Garden Name: </b>
+                            <%= garden.name %>
+                            <br>
+                            <b>Garden Created: </b>
+                            <%= garden.created_at %>
+                            <br>
+                            <b>ID: </b>
+                            <%= garden.id %>
+                            <br>
+                            <br>
+                            <form action="/garden/:<%= garden.id %>" method="get">
+                                <button type="submit" class="btn btn-info btn-sm pull-left">Open Garden</button>
+                            </form>
+                            <form action="/profile/:<%= garden.id %>" method="post">
+                                <button type="submit" class="btn btn-danger btn-sm pull-right" data-toggle="modal"
+                                    data-target="#deleteGarden">Delete
+                                    Garden
+                                </button>
+                            </form>
+                        </div>
+                        <% }) %>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+
+</html>
