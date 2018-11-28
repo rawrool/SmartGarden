@@ -422,3 +422,1124 @@
 "moisture": 33,
 }
 
+{
+"date": 10/24,
+"time": 9:30,
+"temperature": 57.20,
+"humidity": 45.00,
+"moisture": 61,
+}
+
+{
+"date": 10/24,
+"time": 15:30,
+"temperature": 55.40,
+"humidity": 51.00,
+"moisture": 61,
+}
+
+{
+"date": 10/24,
+"time": 21:30,
+"temperature": 57.20,
+"humidity": 50.00,
+"moisture": 32,
+}
+
+{
+"date": 10/25,
+"time": 3:30,
+"temperature": 80.60,
+"humidity": 43.00,
+"moisture": 32,
+}
+
+{
+"date": 10/25,
+"time": 9:30,
+"temperature": 100.40,
+"humidity": 33.00,
+"moisture": 31,
+}
+
+{
+"date": 10/25,
+"time": 15:30,
+"temperature": 60.80,
+"humidity": 61.00,
+"moisture": 62,
+}
+
+{
+"date": 10/25,
+"time": 21:30,
+"temperature": 57.20,
+"humidity": 62.00,
+"moisture": 62,
+}
+
+{
+"date": 10/26,
+"time": 3:30,
+"temperature": 59.00,
+"humidity": 62.00,
+"moisture": 62,
+}
+
+{
+"date": 10/26,
+"time": 9:30,
+"temperature": 66.20,
+"humidity": 58.00,
+"moisture": 33,
+}
+
+{
+"date": 10/26,
+"time": 15:30,
+"temperature": 73.40,
+"humidity": 57.00,
+"moisture": 33,
+}
+
+{
+"date": 10/26,
+"time": 21:30,
+"temperature": 84.20,
+"humidity": 51.00,
+"moisture": 33,
+}
+
+{
+"date": 10/27,
+"time": 3:30,
+"temperature": 59.00,
+"humidity": 66.00,
+"moisture": 62,
+}
+
+{
+"date": 10/27,
+"time": 9:30,
+"temperature": 57.20,
+"humidity": 71.00,
+"moisture": 62,
+}
+
+{
+"date": 10/27,
+"time": 15:30,
+"temperature": 60.80,
+"humidity": 68.00,
+"moisture": 62,
+}
+
+{
+"date": 10/27,
+"time": 21:30,
+"temperature": 68.00,
+"humidity": 61.00,
+"moisture": 33,
+}
+
+{
+"date": 10/28,
+"time": 3:30,
+"temperature": 73.40,
+"humidity": 64.00,
+"moisture": 32,
+}
+
+{
+"date": 10/28,
+"time": 9:30,
+"temperature": 78.80,
+"humidity": 55.00,
+"moisture": 39,
+}
+
+{
+"date": 10/28,
+"time": 15:30,
+"temperature": 59.00,
+"humidity": 68.00,
+"moisture": 61,
+}
+
+{
+"date": 10/28,
+"time": 21:30,
+"temperature": 57.20,
+"humidity": 70.00,
+"moisture": 61,
+}
+
+{
+"date": 10/29,
+"time": 3:30,
+"temperature": 59.00,
+"humidity": 71.00,
+"moisture": 61,
+}
+
+{
+"date": 10/29,
+"time": 9:30,
+"temperature": 66.20,
+"humidity": 68.00,
+"moisture": 33,
+}
+
+{
+
+"date": 10/29,
+"time": 15:30,
+"temperature": 80.60,
+"humidity": 58.00,
+"moisture": 30,
+}
+
+{
+"date": 10/29,
+"time": 21:30,
+"temperature": 80.60,
+"humidity": 61.00,
+"moisture": 31,
+}
+
+{
+"date": 10:30,
+"time": 3:30,
+"temperature": 78.80,
+"humidity": 65.00,
+"moisture": 30,
+}
+
+{
+"date": 10:30,
+"time": 9:30,
+"temperature": 78.80,
+"humidity": 64.00,
+"moisture": 31,
+}
+
+{
+"date": 10:30,
+"time": 15:30,
+"temperature": 77.00,
+"humidity": 64.00,
+"moisture": 32,
+}
+
+{
+"date": 10:30,
+"time": 21:30,
+"temperature": 80.60,
+"humidity": 56.00,
+"moisture": 40,
+}
+
+{
+"date": 10:31,
+"time": 3:30,
+"temperature": 87.80,
+"humidity": 51.00,
+"moisture": 38,
+}
+
+{
+"date": 10:31,
+"time": 9:30,
+"temperature": 59.00,
+"humidity": 84.00,
+"moisture": 62,
+}
+
+{
+"date": 10:31,
+"time": 15:30,
+"temperature": 53.60,
+"humidity": 90.00,
+"moisture": 61,
+}
+
+{
+"date": 10:31,
+"time": 21:30,
+"temperature": 66.20,
+"humidity": 91.00,
+"moisture": 33,
+}
+
+{
+"date": 11:1,
+"time": 3:30,
+"temperature": 100.40,
+"humidity": 27.00,
+"moisture": 32,
+}
+
+{
+"date": 11:1,
+"time": 9:30,
+"temperature": 59.00,
+"humidity": 77.00,
+"moisture": 61,
+}
+
+{
+"date": 11:1,
+"time": 15:30,
+"temperature": 53.60,
+"humidity": 90.00,
+"moisture": 61,
+}
+
+{
+"date": 11:1,
+"time": 21:30,
+"temperature": 66.20,
+"humidity": 93.00,
+"moisture": 33,
+}
+
+{
+"date": 11:2,
+"time": 3:30,
+"temperature": 93.20,
+"humidity": 36.00,
+"moisture": 33,
+}
+
+{
+"date": 11:2,
+"time": 9:30,
+"temperature": 57.20,
+"humidity": 84.00,
+"moisture": 61,
+}
+
+{
+"date": 11:2,
+"time": 15:30,
+"temperature": 60.80,
+"humidity": 90.00,
+"moisture": 61,
+}
+
+{
+"date": 11:2,
+"time": 21:30,
+"temperature": 68.00,
+"humidity": 88.00,
+"moisture": 32,
+}
+
+{
+"date": 11:3,
+"time": 3:30,
+"temperature": 80.60,
+"humidity": 59.00,
+"moisture": 33,
+}
+
+{
+"date": 11:3,
+"time": 9:30,
+"temperature": 55.40,
+"humidity": 90.00,
+"moisture": 61,
+}
+
+{
+"date": 11:3,
+"time": 15:30,
+"temperature": 60.80,
+"humidity": 92.00,
+"moisture": 61,
+}
+
+{
+"date": 11:3,
+"time": 21:30,
+"temperature": 68.00,
+"humidity": 85.00,
+"moisture": 32,
+}
+
+{
+"date": 11:4,
+"time": 3:30,
+"temperature": 71.60,
+"humidity": 70.00,
+"moisture": 33,
+}
+
+{
+"date": 11:4,
+"time": 9:30,
+"temperature": 59.00,
+"humidity": 91.00,
+"moisture": 61,
+}
+
+{
+"date": 11:4,
+"time": 15:30,
+"temperature": 60.80,
+"humidity": 92.00,
+"moisture": 61,
+}
+
+{
+"date": 11:4,
+"time": 21:30,
+"temperature": 75.20,
+"humidity": 72.00,
+"moisture": 32,
+}
+
+{
+"date": 11:5,
+"time": 3:30,
+"temperature": 71.60,
+"humidity": 58.00,
+"moisture": 48,
+}
+
+{
+"date": 11:5,
+"time": 9:30,
+"temperature": 55.40,
+"humidity": 87.00,
+"moisture": 61,
+}
+
+{
+"date": 11:5,
+"time": 15:30,
+"temperature": 50.00,
+"humidity": 88.00,
+"moisture": 61,
+}
+
+{
+"date": 11:5,
+"time": 21:30,
+"temperature": 78.80,
+"humidity": 57.00,
+"moisture": 32,
+}
+
+{
+"date": 11:6,
+"time": 3:30,
+"temperature": 71.60,
+"humidity": 34.00,
+"moisture": 61,
+}
+
+{
+"date": 11:6,
+"time": 9:30,
+"temperature": 51.80,
+"humidity": 67.00,
+"moisture": 61,
+}
+
+{
+"date": 11:6,
+"time": 15:30,
+"temperature": 46.40,
+"humidity": 85.00,
+"moisture": 61,
+}
+
+{
+"date": 11:6,
+"time": 21:30,
+"temperature": 78.80,
+"humidity": 54.00,
+"moisture": 31,
+}
+
+{
+"date": 11:7,
+"time": 3:30,
+"temperature": 82.40,
+"humidity": 45.00,
+"moisture": 31,
+}
+
+{
+"date": 11:7,
+"time": 9:30,
+"temperature": 98.60,
+"humidity": 13.00,
+"moisture": 32,
+}
+
+{
+"date": 11:7,
+"time": 15:30,
+"temperature": 91.40,
+"humidity": 19.00,
+"moisture": 33,
+}
+
+{
+"date": 11:7,
+"time": 21:30,
+"temperature": 86.00,
+"humidity": 26.00,
+"moisture": 42,
+}
+
+{
+"date": 11:8,
+"time": 3:30,
+"temperature": 77.00,
+"humidity": 36.00,
+"moisture": 44,
+}
+
+{
+"date": 11:8,
+"time": 9:30,
+"temperature": 78.80,
+"humidity": 34.00,
+"moisture": 44,
+}
+
+{
+"date": 11:8,
+"time": 15:30,
+"temperature": 57.20,
+"humidity": 55.00,
+"moisture": 61,
+}
+
+{
+"date": 11:8,
+"time": 21:30,
+"temperature": 50.00,
+"humidity": 65.00,
+"moisture": 63,
+}
+
+{
+"date": 11:9,
+"time": 3:30,
+"temperature": 77.00,
+"humidity": 46.00,
+"moisture": 32,
+}
+
+{
+"date": 11:9,
+"time": 9:30,
+"temperature": 73.40,
+"humidity": 58.00,
+"moisture": 46,
+}
+
+{
+"date": 11:9,
+"time": 15:30,
+"temperature": 57.20,
+"humidity": 68.00,
+"moisture": 61,
+}
+
+{
+"date": 11:9,
+"time": 21:30,
+"temperature": 57.20,
+"humidity": 81.00,
+"moisture": 61,
+}
+
+{
+"date": 11:10,
+"time": 3:30,
+"temperature": 77.00,
+"humidity": 79.00,
+"moisture": 30,
+}
+
+{
+"date": 11:10,
+"time": 9:30,
+"temperature": 68.00,
+"humidity": 84.00,
+"moisture": 58,
+}
+
+{
+"date": 11:10,
+"time": 15:30,
+"temperature": 57.20,
+"humidity": 87.00,
+"moisture": 60,
+}
+
+{
+"date": 11:10,
+"time": 21:30,
+"temperature": 57.20,
+"humidity": 91.00,
+"moisture": 60,
+}
+
+{
+"date": 11:11,
+"time": 3:30,
+"temperature": 71.60,
+"humidity": 95.00,
+"moisture": 30,
+}
+
+{
+"date": 11:11,
+"time": 9:30,
+"temperature": 64.40,
+"humidity": 93.00,
+"moisture": 60,
+}
+
+{
+"date": 11:11,
+"time": 15:30,
+"temperature": 62.60,
+"humidity": 90.00,
+"moisture": 60,
+}
+
+{
+"date": 11:11,
+"time": 21:30,
+"temperature": 62.60,
+"humidity": 90.00,
+"moisture": 61,
+}
+
+{
+"date": 11:12,
+"time": 3:30,
+"temperature": 73.40,
+"humidity": 78.00,
+"moisture": 30,
+}
+
+{
+"date": 11:12,
+"time": 9:30,
+"temperature": 64.40,
+"humidity": 84.00,
+"moisture": 60,
+}
+
+{
+"date": 11:12,
+"time": 15:30,
+"temperature": 55.40,
+"humidity": 90.00,
+"moisture": 60,
+}
+
+{
+"date": 11:12,
+"time": 21:30,
+"temperature": 59.00,
+"humidity": 89.00,
+"moisture": 60,
+}
+
+{
+"date": 11:13,
+"time": 3:30,
+"temperature": 77.00,
+"humidity": 78.00,
+"moisture": 30,
+}
+
+{
+"date": 11:13,
+"time": 9:30,
+"temperature": 80.60,
+"humidity": 51.00,
+"moisture": -50,
+}
+
+{
+"date": 11:13,
+"time": 15:30,
+"temperature": 55.40,
+"humidity": 78.00,
+"moisture": 61,
+}
+
+{
+"date": 11:13,
+"time": 21:30,
+"temperature": 59.00,
+"humidity": 78.00,
+"moisture": 61,
+}
+
+{
+"date": 11:14,
+"time": 3:30,
+"temperature": 68.00,
+"humidity": 74.00,
+"moisture": -27,
+}
+
+{
+"date": 11:14,
+"time": 9:30,
+"temperature": 84.20,
+"humidity": 72.00,
+"moisture": -48,
+}
+
+{
+"date": 11:14,
+"time": 21:30,
+"temperature": 60.80,
+"humidity": 71.00,
+"moisture": 60,
+}
+
+{
+"date": 11:15,
+"time": 3:30,
+"temperature": 46.40,
+"humidity": 72.00,
+"moisture": 60,
+}
+
+{
+"date": 11:15,
+"time": 9:30,
+"temperature": 69.80,
+"humidity": 56.00,
+"moisture": 14,
+}
+
+{
+"date": 11:15,
+"time":15:30,
+"temperature": 89.60,
+"humidity": 52.00,
+"moisture": 19,
+}
+
+{
+"date": 11:15,
+"time": 21:30,
+"temperature": 48.20,
+"humidity": 58.00,
+"moisture": 60,
+}
+
+{
+"date": 11:16,
+"time": 3:30,
+"temperature": 41.00,
+"humidity": 62.00,
+"moisture": 62,
+}
+
+{
+"date": 11:16,
+"time": 9:30,
+"temperature": 62.60,
+"humidity": 51.00,
+"moisture": -45,
+}
+
+{
+"date": 11:16,
+"time": 15:30,
+"temperature": 69.80,
+"humidity": 52.00,
+"moisture": 27,
+}
+
+{
+"date": 11:16,
+"time": 21:30,
+"temperature": 46.40,
+"humidity": 60.00,
+"moisture": 62,
+}
+
+{
+"date": 11:17,
+"time": 3:30,
+"temperature": 39.20,
+"humidity": 67.00,
+"moisture": 62,
+}
+
+{
+"date": 11:17,
+"time": 9:30,
+"temperature": 60.80,
+"humidity": 57.00,
+"moisture": -42,
+}
+
+{
+"date": 11:17,
+"time": 15:30,
+"temperature": 77.00,
+"humidity": 54.00,
+"moisture": 30,
+}
+
+{
+"date": 11:17,
+"time": 21:30,
+"temperature": 46.40,
+"humidity": 63.00,
+"moisture": 62,
+}
+
+{
+"date": 11:18,
+"time": 3:30,
+"temperature": 37.40,
+"humidity": 70.00,
+"moisture": 62,
+}
+
+{
+"date": 11:18,
+"time": 9:30,
+"temperature": 64.40,
+"humidity": 54.00,
+"moisture": -25,
+}
+
+{
+"date": 11:18,
+"time": 15:30,
+"temperature": 77.00,
+"humidity": 49.00,
+"moisture": 40,
+}
+
+{
+"date": 11:18,
+"time": 21:30,
+"temperature": 46.40,
+"humidity": 55.00,
+"moisture": 62,
+}
+
+{
+"date": 11:19,
+"time": 3:30,
+"temperature": 39.20,
+"humidity": 60.00,
+"moisture": 60,
+}
+
+{
+"date": 11:19,
+"time": 9:30,
+"temperature": 71.60,
+"humidity": 44.00,
+"moisture": -50,
+}
+
+{
+"date": 11:19,
+"time": 15:30,
+"temperature": 71.60,
+"humidity": 44.00,
+"moisture": 50,
+}
+
+{
+"date": 11:19,
+"time": 21:30,
+"temperature": 51.80,
+"humidity": 46.00,
+"moisture": 60,
+}
+
+{
+"date": 11:20,
+"time": 3:30,
+"temperature": 50.00,
+"humidity": 46.00,
+"moisture": 60,
+}
+
+{
+"date": 11:20,
+"time": 9:30,
+"temperature": 71.60,
+"humidity": 38.00,
+"moisture": -44,
+}
+
+{
+"date": 11:20,
+"time": 15:30,
+"temperature": 53.60,
+"humidity": 90.00,
+"moisture": 61,
+}
+
+{
+"date": 11:20,
+"time": 21:30,
+"temperature": 66.20,
+"humidity": 93.00,
+"moisture": 33,
+}
+
+{
+"date": 11:21,
+"time": 3:30,
+"temperature": 93.20,
+"humidity": 36.00,
+"moisture": 33,
+}
+
+{
+"date": 11:21,
+"time": 9:30,
+"temperature": 57.20,
+"humidity": 84.00,
+"moisture": 61,
+}
+
+{
+"date": 11:21,
+"time": 15:30,
+"temperature": 60.80,
+"humidity": 90.00,
+"moisture": 61,
+}
+
+{
+"date": 11:21,
+"time": 21:30,
+"temperature": 68.00,
+"humidity": 88.00,
+"moisture": 32,
+}
+
+{
+"date": 11:22,
+"time": 3:30,
+"temperature": 80.60,
+"humidity": 59.00,
+"moisture": 33,
+}
+
+{
+"date": 11:22,
+"time": 9:30,
+"temperature": 55.40,
+"humidity": 90.00,
+"moisture": 61,
+}
+
+{
+"date": 11:22,
+"time": 15:30,
+"temperature": 60.80,
+"humidity": 92.00,
+"moisture": 61,
+}
+
+{
+"date": 11:22,
+"time": 21:30,
+"temperature": 68.00,
+"humidity": 85.00,
+"moisture": 32,
+}
+
+{
+"date": 11:23,
+"time": 3:30,
+"temperature": 71.60,
+"humidity": 70.00,
+"moisture": 33,
+}
+
+{
+"date": 11:23,
+"time": 9:30,
+"temperature": 59.00,
+"humidity": 91.00,
+"moisture": 61,
+}
+
+{
+"date": 11:23,
+"time": 15:30,
+"temperature": 60.80,
+"humidity": 92.00,
+"moisture": 61,
+}
+
+{
+"date": 11:23,
+"time": 21:30,
+"temperature": 75.20,
+"humidity": 72.00,
+"moisture": 32,
+}
+
+{
+"date": 11:24,
+"time": 3:30,
+"temperature": 71.60,
+"humidity": 58.00,
+"moisture": 48,
+}
+
+{
+"date": 11:24,
+"time": 9:30,
+"temperature": 55.40,
+"humidity": 87.00,
+"moisture": 61,
+}
+
+{
+"date": 11:24,
+"time": 15:30,
+"temperature": 50.00,
+"humidity": 88.00,
+"moisture": 61,
+}
+
+{
+"date": 11:24,
+"time": 21:30,
+"temperature": 78.80,
+"humidity": 57.00,
+"moisture": 32,
+}
+
+{
+"date": 11:25,
+"time": 3:30,
+"temperature": 71.60,
+"humidity": 34.00,
+"moisture": 61,
+}
+
+{
+"date": 11:25,
+"time": 9:30,
+"temperature": 51.80,
+"humidity": 67.00,
+"moisture": 61,
+}
+
+{
+"date": 11:25,
+"time": 15:30,
+"temperature": 46.40,
+"humidity": 85.00,
+"moisture": 61,
+}
+
+{
+"date": 11:25,
+"time": 21:30,
+"temperature": 78.80,
+"humidity": 54.00,
+"moisture": 31,
+}
+
+{
+"date": 11:26,
+"time": 3:30,
+"temperature": 82.40,
+"humidity": 45.00,
+"moisture": 31,
+}
+
+{
+"date": 11:26,
+"time": 9:30,
+"temperature": 98.60,
+"humidity": 13.00,
+"moisture": 32,
+}
+
+{
+"date": 11:26,
+"time": 15:30,
+"temperature": 91.40,
+"humidity": 19.00,
+"moisture": 33,
+}
+
+{
+"date": 11:26,
+"time": 21:30,
+"temperature": 86.00,
+"humidity": 26.00,
+"moisture": 42,
+}
+
+{
+"date": 11:27,
+"time": 3:30,
+"temperature": 53.60,
+"humidity": 90.00,
+"moisture": 61,
+}
+
+{
+"date": 11:27,
+"time": 9:30,
+"temperature": 66.20,
+"humidity": 93.00,
+"moisture": 33,
+}
+
+{
+"date": 11:27,
+"time": 15:30,
+"temperature": 93.20,
+"humidity": 36.00,
+"moisture": 33,
+}
+
+{
+"date": 11:27,
+"time": 21:30,
+"temperature": 57.20,
+"humidity": 84.00,
+"moisture": 61,
+}
+
+{
+"date": 11:28,
+"time": 3:30,
+"temperature": 60.80,
+"humidity": 90.00,
+"moisture": 61,
+}
+
+{
+"date": 11:28,
+"time": 9:30,
+"temperature": 68.00,
+"humidity": 88.00,
+"moisture": 32,
+}
+
